@@ -4,13 +4,28 @@
  <title>Barelysuper Pokedex</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--CSS-->
   <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css">
+    <!--Main Page-->
   <link rel="stylesheet" type="text/css" href="css/PokemonSpecificTyping.css">
+    <!--Search bar-->
   <link rel="stylesheet" type="text/css" href="css/autocomplete.css">
+    <!--Charts-->
+  <link rel="stylesheet" type="text/css" href="css/highchart.css">
+    <!--Evolution line-->
+  <link rel="stylesheet" type="text/css" href="css/evolutionline.css">
+  <!--JS-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="Bootstrap/js/bootstrap.min.js"></script>
-  <script src="js/loading.js"></script>
+  <!--<script src="js/loading.js"></script>-->
+  <!--highcharts and bootstrap-->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <!--Evolution Line Icons -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <!--Favicons-->
   <link rel="apple-touch-icon-precomposed" sizes="57x57" href=“favicon/apple-touch-icon-57x57.png" />
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon/apple-touch-icon-114x114.png" />
@@ -33,13 +48,13 @@
   <meta name="msapplication-wide310x150logo" content="favicon/mstile-310x150.png" />
   <meta name="msapplication-square310x310logo" content="favicon/mstile-310x310.png" />
 </head>
-<body>
 
-<div id="loading"></div>
+<body>
+<!-- Removing the Loading GIF <div id="loading"></div> -->
 <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
- <form action="/index.php" method="get" id="pokeform">
+ <form action="" method="get" id="pokeform">
 <div class="container">
  <div class="row">
     <div class="splitscreen">
@@ -94,7 +109,7 @@
     <p>
     <hr/>
     <div class="active-pink-3 active-pink-4 mb-4 autocomplete">
-    <input class="form-control" id="myInput" type="text" name="search" placeholder="OR....search for them cuties" "font-weight-bold" form="pokeform" aria-label="Search"></div>
+    <input autocomplete="off" class="form-control" id="myInput" type="text" name="search" placeholder="OR....search for them cuties" "font-weight-bold" form="pokeform" aria-label="Search"></div>
     <hr/>
     <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">
   </div>
@@ -132,10 +147,20 @@ $pokemonSearch ="";
 $pokemonDesc = "";
 $pokeDexLink = "";
 $pokemonImage = "";
+$pokemonNumber = 0;
+$pokemonSpecies = "";
+$pokemonPokedexEntry = "";
 $pokemonList = array();
 $pokemonRegion = array();
 $pokemonValue1 = "";
 $pokemonValue2 = "";
+$pokemonEvolutionLine = array();
+$HP="";
+$Attack="";
+$Defense="";
+$SpAtk="";
+$SpDef="";
+$Speed = "";
 
  //https://forums.phpfreaks.com/topic/269574-searching-through-a-csv-and-only-returning-certain-rows-and-certain-columns/
  $PokemonValue1 = $_GET['Type1'];
@@ -193,9 +218,19 @@ if(is_numeric($pokemonSearch))
     {
       if ($data[0]==$pokemonSearch)
       {
+      $pokemonNumber = $data[0];
       $pokemonFullData[] = $data[1];
       $PokemonValue1 = $data[2];
       $PokemonValue2 = $data[3];
+      $HP=$data[5];
+      $Attack=$data[6];
+      $Defense=$data[7];
+      $SpAtk=$data[8];
+      $SpDef=$data[9];
+      $Speed = $data[10];
+      $pokemonEvolutionLine = $data[15];
+      $pokemonSpecies = $data[16];
+      $pokemonPokedexEntry = $data[17];
       $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
       $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
       $dataWithoutFullstopsCommas = preg_replace('/[.,]/', '', $data[1]);
@@ -212,6 +247,11 @@ if(is_numeric($pokemonSearch))
           $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.jpg">';
          }
        }
+       elseif (strtolower($data[1]) == strtolower("Meltan"))
+       {
+          $pokemonImage = '<img class="whodat" src="https://cdn.bulbagarden.net/upload/thumb/3/30/Meltan.png/500px-Meltan.png">';
+          echo '<style>.fa{display:none}</style>';
+       }
        else
        {
         if($data[13] == "")
@@ -225,6 +265,8 @@ if(is_numeric($pokemonSearch))
           $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
         }
        }
+       //Stop it going to the Alolan ones or variants
+       break;
       }
     }
   }
@@ -240,10 +282,20 @@ else
 
    if($percent == 100)
     {
+     $pokemonNumber = $data[0];
      $PokemonValue1 = $data[2];
      $PokemonValue2 = $data[3];
+     $HP=$data[5];
+     $Attack=$data[6];
+     $Defense=$data[7];
+     $SpAtk=$data[8];
+     $SpDef=$data[9];
+     $Speed = $data[10];
      $PokemonType1Array[] = $data[2];
      $PokemonType2Array[] = $data[3];
+     $pokemonEvolutionLine = $data[15];
+     $pokemonSpecies = $data[16];
+     $pokemonPokedexEntry = $data[17];
      $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
      $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
      $dataWithoutSpaces = preg_replace('/\s+/', '-', strtolower($data[1]));
@@ -258,6 +310,11 @@ else
       {
        $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.jpg">';
       }
+     }
+     elseif (strtolower($data[1]) == strtolower("Meltan"))
+     {
+        $pokemonImage = '<img class="whodat" src="https://cdn.bulbagarden.net/upload/thumb/3/30/Meltan.png/500px-Meltan.png">';
+        echo '<style>.fa{display:none}</style>';
      }
      else
      {
@@ -277,10 +334,20 @@ else
     }
    if($percent > 85 and !isset($matchConfirmed))
     {
+     $pokemonNumber = $data[0];
      $PokemonValue1 = $data[2];
      $PokemonValue2 = $data[3];
+     $HP=$data[5];
+     $Attack=$data[6];
+     $Defense=$data[7];
+     $SpAtk=$data[8];
+     $SpDef=$data[9];
+     $Speed = $data[10];
      $PokemonType1Array[] = $data[2];
      $PokemonType2Array[] = $data[3];
+     $pokemonEvolutionLine = $data[15];
+     $pokemonSpecies = $data[16];
+     $pokemonPokedexEntry = $data[17];
      $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
      $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
      $dataWithoutSpaces = preg_replace('/\s+/', '-', strtolower($data[1]));
@@ -295,6 +362,11 @@ else
       {
        $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.jpg">';
       }
+     }
+     elseif (strtolower($data[1]) == strtolower("Meltan"))
+     {
+        $pokemonImage = '<img class="whodat" src="https://cdn.bulbagarden.net/upload/thumb/3/30/Meltan.png/500px-Meltan.png">';
+        echo '<style>.fa{display:none}</style>';
      }
      else
      {
@@ -336,6 +408,7 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
  fclose($handle);
 }
 
+
 if (!isset($PokemonValueCombined))
 {
 echo '<div class="container">
@@ -359,10 +432,112 @@ else
        <div class="container">
        <div id="poketype">
        <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>
-       '.  $pokeDexLink .'<br/>
-       '. $pokemonImage .'
-       <p><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">'.$data[1].' Pokemon of this type</button><br/>
-  <div id="demo" class="collapse">';
+       '.  $pokeDexLink .'<br/>';
+       if($pokemonNumber > 1)
+       {
+       echo '
+       <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber-1) .'"><i class="fa fa-arrow-circle-left" style="font-size:50px" aria-hidden="true"></i></a>';
+       }
+       echo $pokemonImage .'
+       <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"><i class="fa fa-arrow-circle-right" style="font-size:50px" aria-hidden="true"></i></a><br/>';
+
+    //to disable pokedex entry until ready
+    $pokemonEvolutionLine = "";
+    if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
+    {
+    echo '
+    <p><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">PokeDex Entry</button><br/>
+    <div id="demo2" class="collapse">';
+    $pieces = explode(">",$pokemonEvolutionLine);
+    echo '<br/>
+    <div class="card">
+        <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">'.$pokemonPokedexEntry.'</li>
+            <li class="list-group-item"><ul>';
+            foreach ($pieces as $value)
+            {
+                $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+                if($value != "-")
+                {
+                    if ($value === end($pieces)) { //last
+                        if (strpos($value, '|') !== false)
+                        {
+                            $value  = str_replace("|","",$value);
+                            $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                            echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                        }
+                        else
+                        {
+                            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                        }
+
+                    }
+                    else
+                    {
+                        if (strpos($value, '|') !== false)
+                        {
+                            $value  = str_replace("|","",$value);
+                            $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                            echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                        }
+                        else
+                        {
+                            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                        }
+                    }
+                }
+                else
+                {
+                    echo '<li><p>This Pokemon has no evolution</p></li>';
+                }
+            }
+            echo '</ul>
+            </li>
+        </ul>
+        </div>
+    </div>';
+    }
+    if(isset($HP) and $HP !="")
+    {
+    //POGO Calculations
+    //CpM (Combat Points Modifier) - Using Level 40 (Technically Level 39)
+    $CPM = 0.78463697;
+
+    //Level of the IVs as you would get through Appraisals
+    $IV_Attack = 15;
+    $IV_Defence = 15;
+    $IV_HP = 15;
+
+    //Generating Base Speed
+    $PokemonGoSpeedMod = 1+(($Speed-75)/500);
+
+    //Generating Base Attack by combining Special Att. And Base Att.
+    $HigherAttackStat = MAX($Attack,$SpAtk);
+    $LowerAttackStat = MIN($Attack,$SpAtk);
+    $ScaledAttackStat = ROUND(2*((7/8)*$HigherAttackStat+(1/8)*$LowerAttackStat));
+    $PokemonGoBaseAttack = Round($ScaledAttackStat * $PokemonGoSpeedMod);
+
+    //Generating Base Defence combining Special Def. And Base Def.
+    $HigherDefenceStat = MAX($Defense,$SpDef);
+    $LowerDefenceStat = MIN($Defense,$SpDef);
+    $ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(1/8)*$LowerDefenceStat));
+    $PokemonGoBaseDefence = Round($ScaledDefenceStat * $PokemonGoSpeedMod);
+
+    //Generating Base Stamina (HP)
+    $PokemonGoBaseHP = 2*$HP;
+
+    //Rounding down the Pokemon MAX CP based on the stats above pow() - is power of, floor() rounds down to the nearest integer
+    $CP = floor((($PokemonGoBaseAttack+$IV_Attack)*pow(($PokemonGoBaseDefence+$IV_Defence),0.5)*pow(($PokemonGoBaseHP+$IV_HP),0.5)*pow($CPM,2))/10);
+    echo '
+        <p><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo3">Stats</button></p>
+        <div id="demo3" class="collapse">
+            <li class="list-group-item"><div id="StatsContainer"></div><hr/><div id="PogoStatsContainer"></div></li>
+        </div>';
+    }
+    echo '
+       <p><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">'.$data[1].' Pokemon of this type</button><br/>
+    <div id="demo" class="collapse">';
           $currentGen = "";
        foreach ($pokemonList as $pokeloop) {
 
@@ -372,12 +547,12 @@ else
               {
               echo '<br/>';
               echo '<p class="font-weight-bold">Gen '.$pokeloop[strlen($pokeloop) - 1].': </p>';
-              echo '<a href="http://mwachala.nyambu.net/index.php?Type1=Bug&Type2=&search='.substr($pokeloop, 0, -1).'"><button type="button" class="btn btn-outline-info pokemonOfAType">'.substr($pokeloop, 0, -1).'</button></a> ';
+              echo '<a href="?Type1=Bug&Type2=&search='.substr($pokeloop, 0, -1).'"><button type="button" class="btn btn-outline-info pokemonOfAType">'.substr($pokeloop, 0, -1).'</button></a> ';
               $currentGen = $pokeloop[strlen($pokeloop) - 1];
               }
               else
               {
-              echo '<a href="http://mwachala.nyambu.net/index.php?Type1=Bug&Type2=&search='.substr($pokeloop, 0, -1).'"><button type="button" class="btn btn-outline-info pokemonOfAType">'.substr($pokeloop, 0, -1).'</button></a> ';
+              echo '<a href="?Type1=Bug&Type2=&search='.substr($pokeloop, 0, -1).'"><button type="button" class="btn btn-outline-info pokemonOfAType">'.substr($pokeloop, 0, -1).'</button></a> ';
               }
           }
        }
@@ -484,8 +659,154 @@ else
   }
 }
 }
+
+
+//____Autocomplete Javascript Call_____\\
+include("js/autocomplete.php");
 ?>
 
-<script src="js/autocomplete.js"></script>
+
+<script>
+
+var HP = <?php echo $HP ?>;
+var Attack = <?php echo $Attack ?>;
+var Defense = <?php echo $Defense ?>;
+var SpAtk = <?php echo $SpAtk ?>;
+var SpDef = <?php echo $SpDef ?>;
+var Speed = <?php echo $Speed ?>;
+
+
+Highcharts.chart('StatsContainer', {
+
+
+  chart: {
+    polar: true,
+    type: 'line',
+    backgroundColor: "rgba(255, 255, 255, 0.4)"
+  },
+
+  exporting: {
+     enabled: false
+  },
+
+  title: {
+    text: 'Stats',
+    x: -80
+  },
+
+  pane: {
+    size: '80%'
+  },
+
+  xAxis: {
+    categories: ['HP','Attack','Defense','Sp. Atk','Sp. Def','Speed'],
+    tickmarkPlacement: 'on',
+    lineWidth: 0
+  },
+
+  yAxis: {
+    gridLineInterpolation: 'polygon',
+    lineWidth: 0,
+    min: 0,
+    tickPositions: [0, 25, 50, 100, 150, 200, 250]
+  },
+
+  tooltip: {
+    shared: true,
+    pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+  },
+
+  legend: {
+    enabled:false,
+    align: 'right',
+    verticalAlign: 'top',
+    y: 70,
+    layout: 'vertical'
+  },
+
+  series: [{
+    name: 'Poké stats',
+    data: [HP,Attack,Defense,SpAtk,SpDef,Speed],
+    pointPlacement: 'off'
+  }]
+
+});
+
+</script>
+
+<!--Pogo Chart-->
+<script>
+
+var PoGoCP = <?php echo $CP; ?>;
+var PoGoHP = <?php echo $PokemonGoBaseHP; ?>;
+var PoGoAttack = <?php echo $PokemonGoBaseAttack; ?>;
+var PoGoDefense = <?php echo $PokemonGoBaseDefence; ?>;
+var PoGoSpeed = <?php echo $PokemonGoSpeedMod; ?>;
+
+
+Highcharts.chart('PogoStatsContainer', {
+  chart: {
+    type: 'bar'
+  },
+  title: {
+    text: 'MAX CP: '+ PoGoCP
+  },
+  xAxis: {
+    categories: ['Pokemon Stats'],
+    title: {
+      text: null
+    }
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: 'Stat Points',
+      align: 'high'
+    },
+    labels: {
+      overflow: 'justify'
+    }
+  },
+  tooltip: {
+    valueSuffix: ''
+  },
+  plotOptions: {
+    bar: {
+      dataLabels: {
+        enabled: true
+      }
+    }
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'left',
+    verticalAlign: 'top',
+    y: 80,
+    floating: true,
+    borderWidth: 1,
+    backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+    shadow: true
+  },
+  credits: {
+    enabled: false
+  },
+  series: [{
+    name: 'HP',
+    data: [PoGoHP]
+  }, {
+    name: 'Defence',
+    data: [PoGoDefense]
+  },
+  {
+    name: 'Attack',
+    data: [PoGoAttack]
+  },
+  {
+    name: 'Speed',
+    data: [PoGoSpeed]
+  }]
+});
+</script>
+
 </body>
 </html>

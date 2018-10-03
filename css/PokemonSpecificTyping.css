@@ -1,0 +1,271 @@
+/* PC and Large Devices */
+@media (min-width: 500px)  {
+  .card
+  {
+   /*background-repeat:no-repeat;*/
+   min-width:500px;
+  }
+  
+ .whodat
+  {
+   height:20%;
+   width:20%;
+   object-fit:contain;
+  }
+
+ .whodat.missingno
+ {
+  height:50%;
+  width:50%;
+  object-fit:contain;
+ }
+
+ #loading
+ {
+  background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
+ }
+
+button.btn.btn-info,button.btn.btn-primary
+{
+ min-width: 40%;
+ margin: 0.2%;
+}
+ }
+  
+/* Landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape) 
+{
+ .card
+  {
+   /*background-repeat:no-repeat;*/
+   min-width:500px;
+  }
+  
+ .whodat
+  {
+   height:100%;
+   width:100%;
+   object-fit:contain;
+  }
+
+  #loading
+  {
+   background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
+  }
+  
+button.btn.btn-info,button.btn.btn-primary
+{
+ min-width: 40%;
+ margin: 0.2%;
+}
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) 
+{
+.card.nor, .card.fir,.card.wat,.card.gra,.card.ele,.card.gra,.card.ice,
+.card.fig,.card.poi,.card.gro,.card.fly,.card.psy,.card.bug,.card.roc,.card.gho,
+.card.dra,.card.dar,.card.ste,.card.fai{
+ margin-bottom:0px;
+}
+
+.whodat
+  {
+   height:100%;
+   width:100%;
+   object-fit:contain;
+  }
+ 
+ #poketype
+ {
+  height:100%;
+ }
+
+ #loading
+ {
+  background-image: url("https://vignette.wikia.nocookie.net/pokemongo/images/3/37/Original_loading_screen.png");
+ }
+
+button.btn.btn-info,button.btn.btn-primary
+{
+ min-width: 80%;
+ margin: 0.2%;
+}
+}
+
+
+/*Global Properties Across Devices*/
+
+.whodat
+{
+ margin-top:2.5%;
+}
+
+.pokemonOfAType 
+{
+margin-top:0.5%;
+}  
+
+ hr
+ {
+  background-color:white;
+ }
+ 
+ body
+ {
+  background-image:url("../Photos/pika.jpg");
+ }
+ 
+#loading {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+ .SelectType
+ {
+  background-color:white;
+ }
+ 
+ .splitscreen
+ {
+  min-width:50%;
+  background-color:white;
+  opacity:0.8;
+  display:block;
+  padding:20px;
+  margin-bottom:20px;
+  text-align:center;
+  font-weight:bold;
+ }
+ 
+.active-pink-4 input[type=text]:focus:not([readonly]) {
+   border: 1px solid #f48fb1;
+   box-shadow: 0 0 0 1px #f48fb1;
+}
+ 
+#poketype
+{
+ font-size: 20px;
+ background-color:white;
+ opacity: .8;
+ padding:5px;
+ text-align:center;
+}
+ 
+#poketype p
+{
+ margin-bottom: 0;
+}
+
+#Not-Effective
+{
+ color:red;
+}
+
+#Super-Effective
+{
+ color:Black;
+}
+
+#No-Effect
+{
+ color:Grey;
+}
+ 
+#typeIcon
+{
+ margin-left:30px;
+ margin-bottom:4px;
+}
+
+.card.nor
+{
+background:rgb(182, 182, 168);
+}
+.card.fir
+{
+background:rgb(255, 96, 67);
+}
+.card.wat
+{
+background:rgb(82, 168, 255);
+}
+.card.ele
+{
+background:rgb(255, 211, 82);
+}
+ .card.gra
+{
+background:#89D26B;
+}
+.card.ice
+{
+background:#7DD3FF;
+}
+.card.fig
+{
+background:#BB5544;
+}
+.card.poi
+{
+background:#B469A5;
+}
+.card.gro
+{
+background:#E2C56E;
+}
+.card.fly
+{
+background:#9AA8FF;
+}
+.card.psy
+{
+background:#FF6EA8;
+}
+.card.bug
+{
+background:#B4C33C;
+}
+ .card.roc
+{
+background:#C5B67D;
+}
+.card.gho
+{
+background:#7D7DC5;
+}
+.card.dra
+{
+background:#8B7DF0;
+}
+.card.dar
+{
+background:#8B6E60;
+}
+.card.ste
+{
+background:#AAAABB;
+}
+.card.fai
+{
+background:#F0A6F0;
+}
+ 
+.card-text.header
+{
+background-color:white;
+color: black;
+opacity: 0.6;
+text-size:50px;
+margin-bottom:-1px;
+}

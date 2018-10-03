@@ -1,0 +1,43 @@
+/* Pieces for Evolution Line */
+/* PC and Large Devices */
+@media (min-width: 500px)  {
+  li {
+ display:inline-block;
+ margin-right: 2%;
+  }
+}
+  
+/* Landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape) 
+{
+ li {
+ display:inline-block;
+ margin-right: 2%;
+ }
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) 
+{
+li {
+ margin-right: 2%;
+}
+}
+
+ul {
+ list-style-type: none;
+ display: inline;
+ text-align: center;
+}
+
+.notend::after
+{
+ font-family: FontAwesome;
+ content: "\f061";
+ font-size:100%;
+}
+
+.branchingEvolution
+{
+    display:inline-block;
+}
