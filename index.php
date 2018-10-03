@@ -150,6 +150,8 @@ $pokemonImage = "";
 $pokemonNumber = 0;
 $pokemonSpecies = "";
 $pokemonPokedexEntry = "";
+$mega ="";
+$megastone ="";
 $pokemonList = array();
 $pokemonRegion = array();
 $pokemonValue1 = "";
@@ -219,7 +221,6 @@ if(is_numeric($pokemonSearch))
       if ($data[0]==$pokemonSearch)
       {
       $pokemonNumber = $data[0];
-      $pokemonFullData[] = $data[1];
       $PokemonValue1 = $data[2];
       $PokemonValue2 = $data[3];
       $HP=$data[5];
@@ -228,9 +229,11 @@ if(is_numeric($pokemonSearch))
       $SpAtk=$data[8];
       $SpDef=$data[9];
       $Speed = $data[10];
-      $pokemonEvolutionLine = $data[15];
-      $pokemonSpecies = $data[16];
-      $pokemonPokedexEntry = $data[17];
+      $mega = $data[15];
+      $megastone = $data[16];
+      $pokemonEvolutionLine = $data[17];
+      $pokemonSpecies = $data[18];
+      $pokemonPokedexEntry = $data[19];
       $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
       $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
       $dataWithoutFullstopsCommas = preg_replace('/[.,]/', '', $data[1]);
@@ -293,9 +296,11 @@ else
      $Speed = $data[10];
      $PokemonType1Array[] = $data[2];
      $PokemonType2Array[] = $data[3];
-     $pokemonEvolutionLine = $data[15];
-     $pokemonSpecies = $data[16];
-     $pokemonPokedexEntry = $data[17];
+     $mega = $data[15];
+     $megastone = $data[16];
+     $pokemonEvolutionLine = $data[17];
+     $pokemonSpecies = $data[18];
+     $pokemonPokedexEntry = $data[19];
      $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
      $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
      $dataWithoutSpaces = preg_replace('/\s+/', '-', strtolower($data[1]));
@@ -345,9 +350,11 @@ else
      $Speed = $data[10];
      $PokemonType1Array[] = $data[2];
      $PokemonType2Array[] = $data[3];
-     $pokemonEvolutionLine = $data[15];
-     $pokemonSpecies = $data[16];
-     $pokemonPokedexEntry = $data[17];
+     $mega = $data[15];
+     $megastone = $data[16];
+     $pokemonEvolutionLine = $data[17];
+     $pokemonSpecies = $data[18];
+     $pokemonPokedexEntry = $data[19];
      $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
      $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
      $dataWithoutSpaces = preg_replace('/\s+/', '-', strtolower($data[1]));
@@ -431,8 +438,25 @@ else
        echo '
        <div class="container">
        <div id="poketype">
-       <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>
-       '.  $pokeDexLink .'<br/>';
+       <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>';
+       $megaStonePieces = explode("|",$megastone);
+       $megaPieces = explode("|",$mega);
+       $counter = 0;
+       foreach ($megaStonePieces as $value)
+       {
+        $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+        $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
+        if (count($megaWithoutSpaces) < 3)
+        {
+         echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+        }
+        else
+        {
+         echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+        }
+        $counter++;
+       }
+       echo '<br/>'.$pokeDexLink . '<br/>';
        if($pokemonNumber > 1)
        {
        echo '
@@ -442,7 +466,7 @@ else
        <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"><i class="fa fa-arrow-circle-right" style="font-size:50px" aria-hidden="true"></i></a><br/>';
 
     //to disable pokedex entry until ready
-    $pokemonEvolutionLine = "";
+    //$pokemonEvolutionLine = "";
     if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
     {
     echo '
@@ -454,7 +478,7 @@ else
         <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">'.$pokemonPokedexEntry.'</li>
-            <li class="list-group-item"><ul>';
+            <li class="list-group-item evolve"><ul>';
             foreach ($pieces as $value)
             {
                 $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
@@ -664,8 +688,12 @@ else
 //____Autocomplete Javascript Call_____\\
 include("autocomplete.php");
 
+
+if(isset($_GET['Type1']))
+{
 //____Charts Javascript Call_____\\
 include("highchart.php");
+}
 ?>
 
 </body>
