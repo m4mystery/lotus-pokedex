@@ -439,24 +439,28 @@ else
        <div class="container">
        <div id="poketype">
        <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>';
-       $megaStonePieces = explode("|",$megastone);
-       $megaPieces = explode("|",$mega);
-       $counter = 0;
-       foreach ($megaStonePieces as $value)
+       if (isset($mega) && $mega!="")
        {
-        $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
-        $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
-        if (count($megaWithoutSpaces) < 3)
+        $megaStonePieces = explode("|",$megastone);
+        $megaPieces = explode("|",$mega);
+        $counter = 0;
+        foreach ($megaStonePieces as $value)
         {
-         echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+         $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+         $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
+         if (count($megaWithoutSpaces) < 3)
+         {
+          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+         }
+         else
+         {
+          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+         }
+         $counter++;
         }
-        else
-        {
-         echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
-        }
-        $counter++;
+       echo '<br/>';
        }
-       echo '<br/>'.$pokeDexLink . '<br/>';
+       echo $pokeDexLink . '<br/>';
        if($pokemonNumber > 1)
        {
        echo '
