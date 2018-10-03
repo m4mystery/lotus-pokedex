@@ -471,7 +471,7 @@ else
 
     //to disable pokedex entry until ready
     //$pokemonEvolutionLine = "";
-    if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
+    if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "")
     {
     echo '
     <p><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">PokeDex Entry</button><br/>
