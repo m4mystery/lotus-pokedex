@@ -495,7 +495,7 @@ else
         <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">'.$pokemonPokedexEntry.'</li>
-            <li class="list-group-item evolve"><ul>';
+            <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
             foreach ($pieces as $value)
             {
                 $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
@@ -535,21 +535,42 @@ else
             }
             echo '</ul>
             </li>';
-            /* Work on this to fix / add the multiple pokemon thing
+
             if (count($pokemonNumberNames)>1)
             {
-             echo '<li class="list-group-item"><ul>';
+             echo '<li class="list-group-item forme"><ul><b>Different Forms</b><br/><br/>';
              $counter = 0;
              foreach ($pokemonNumberNames as $pokenames) {
-              print_r($pokemonNumberLinks);
-              $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($pokemonNumberLinks));
-              echo '<li><p><img src="https://img.pokemondb.net/artwork/'.$valueWithoutSpaces.'.jpg" height="42"><br/>'.$pokenames.'</p><li>';
-
+             $pokenamesWithoutSpaces = str_replace(" ","-",$pokenames);
+              if(isset($mega) and $mega != "")
+              {
+               $megaArr = explode("-",$mega);
+               $pokenamesArr = explode(" ",$pokenames);
+               if(strtolower($megaArr[1])=="mega" and strtolower($pokenamesArr[0])=="mega")
+               {
+                echo '<a href="?Type1=Normal&Type2=&search="'.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+               }
+               else
+               {
+                echo '<a href="?Type1=Normal&Type2=&search="'.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+               }
+              }
+              else
+              {
+               if($pokemonNumberLinks[$counter] != "")
+               {
+                echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokemonNumberLinks[$counter]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+               }
+               else
+               {
+                echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+               }
+              }
               $counter++;
              }
              echo '</ul></li>';
             }
-            */
+
         echo '
         </ul>
         </div>

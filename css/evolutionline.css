@@ -43,10 +43,12 @@ ul {
 }
 
 /* list of items */
-li.list-group-item {
+li.list-group-item
+{
  text-align: left;
 }
 
-li.list-group-item.evolve{
+li.list-group-item.evolve,li.list-group-item.forme
+{
  text-align:center;
 }
