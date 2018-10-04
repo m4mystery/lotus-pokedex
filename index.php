@@ -148,6 +148,9 @@ $pokemonDesc = "";
 $pokeDexLink = "";
 $pokemonImage = "";
 $pokemonNumber = 0;
+//for pokemon that have more than one variation
+$pokemonNumberNames = array();
+$pokemonNumberLinks = array();
 $pokemonSpecies = "";
 $pokemonPokedexEntry = "";
 $mega ="";
@@ -270,6 +273,7 @@ if(is_numeric($pokemonSearch))
        }
        //Stop it going to the Alolan ones or variants
        break;
+
       }
     }
   }
@@ -394,7 +398,7 @@ else
   }
 }
 
-
+//get specific information
 if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
 {
 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
@@ -410,11 +414,20 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
    }
  }
 
+ //getting all pokemon a number
+ if(isset($pokemonNumber))
+ {
+  if($pokemonNumber == $data[0])
+  {
+   $pokemonNumberNames[] = $data[1];
+   $pokemonNumberLinks[] = $data[14];
+  }
+ }
+
  }
 
  fclose($handle);
 }
-
 
 if (!isset($PokemonValueCombined))
 {
@@ -521,7 +534,23 @@ else
                 }
             }
             echo '</ul>
-            </li>
+            </li>';
+            /* Work on this to fix / add the multiple pokemon thing
+            if (count($pokemonNumberNames)>1)
+            {
+             echo '<li class="list-group-item"><ul>';
+             $counter = 0;
+             foreach ($pokemonNumberNames as $pokenames) {
+              print_r($pokemonNumberLinks);
+              $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($pokemonNumberLinks));
+              echo '<li><p><img src="https://img.pokemondb.net/artwork/'.$valueWithoutSpaces.'.jpg" height="42"><br/>'.$pokenames.'</p><li>';
+
+              $counter++;
+             }
+             echo '</ul></li>';
+            }
+            */
+        echo '
         </ul>
         </div>
     </div>';
