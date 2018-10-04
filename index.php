@@ -474,7 +474,7 @@ else
     if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "")
     {
     echo '
-    <p><button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#demo2">PokeDex Entry</button><br/>
+    <p><button type="button" class="btn btn-dex" data-toggle="collapse" data-target="#demo2">PokeDex Entry</button><br/>
     <div id="demo2" class="collapse">';
     $pieces = explode(">",$pokemonEvolutionLine);
     echo '<br/>
