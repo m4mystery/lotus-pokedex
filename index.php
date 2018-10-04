@@ -267,8 +267,18 @@ if(is_numeric($pokemonSearch))
         }
         else
         {
+          $specificPokemonLinkArr = explode("-",$data[13]);
+         // for some reason castform isn't a JPG with it's alternative forms so I have to have this clause
+         if(strtolower($specificPokemonLinkArr[0]) == "castform")
+         {
+          $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+          $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($data[14]).'.png">';
+         }
+         else
+         {
           $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
           $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+         }
         }
        }
        //Stop it going to the Alolan ones or variants
@@ -334,8 +344,18 @@ else
        }
        else
        {
-         $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
-         $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+         $specificPokemonLinkArr = explode("-",$data[13]);
+         // for some reason castform isn't a JPG with it's alternative forms so I have to have this clause
+         if(strtolower($specificPokemonLinkArr[0]) == "castform")
+         {
+          $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+          $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($data[14]).'.png">';
+         }
+         else
+         {
+          $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+          $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+         }
        }
      }
      //to make sure it doesn't go to the next one
@@ -388,8 +408,18 @@ else
        }
        else
        {
-         $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
-         $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+         $specificPokemonLinkArr = explode("-",$data[13]);
+         // for some reason castform isn't a JPG with it's alternative forms so I have to have this clause
+         if(strtolower($specificPokemonLinkArr[0]) == "castform")
+         {
+          $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+          $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($data[14]).'.png">';
+         }
+         else
+         {
+          $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+          $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+         }
        }
      }
     }
@@ -566,7 +596,16 @@ else
               {
                if($pokemonNumberLinks[$counter] != "")
                {
-                echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokemonNumberLinks[$counter]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                $pokemonNumberLinksArr = explode("-",$pokemonNumberLinks[$counter]);
+                //clause for castform as it's in PNG form for some fucking reason
+                if($pokemonNumberLinksArr[0] != "castform")
+                {
+                 echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokemonNumberLinks[$counter]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                }
+                else
+                {
+                 echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/vector/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+                }
                }
                else
                {
