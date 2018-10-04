@@ -555,11 +555,11 @@ else
                $pokenamesArr = explode(" ",$pokenames);
                if(strtolower($megaArr[1])=="mega" and strtolower($pokenamesArr[0])=="mega")
                {
-                echo '<a href="?Type1=Normal&Type2=&search="'.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
                }
                else
                {
-                echo '<a href="?Type1=Normal&Type2=&search="'.strtolower($pokenamesWithoutSpaces).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenames).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
                }
               }
               else
