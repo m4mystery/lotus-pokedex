@@ -5,7 +5,7 @@
    /*background-repeat:no-repeat;*/
    min-width:500px;
   }
-  
+
  .whodat
   {
    height:20%;
@@ -25,22 +25,22 @@
   background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
  }
 
-button.btn.btn-info,button.btn.btn-primary
+button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
 {
  min-width: 40%;
  margin: 0.2%;
 }
  }
-  
+
 /* Landscape */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape) 
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape)
 {
  .card
   {
    /*background-repeat:no-repeat;*/
    min-width:500px;
   }
-  
+
  .whodat
   {
    height:100%;
@@ -52,8 +52,8 @@ button.btn.btn-info,button.btn.btn-primary
   {
    background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
   }
-  
-button.btn.btn-info,button.btn.btn-primary
+
+button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
 {
  min-width: 40%;
  margin: 0.2%;
@@ -61,7 +61,7 @@ button.btn.btn-info,button.btn.btn-primary
 }
 
 /* Portrait */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) 
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)
 {
 .card.nor, .card.fir,.card.wat,.card.gra,.card.ele,.card.gra,.card.ice,
 .card.fig,.card.poi,.card.gro,.card.fly,.card.psy,.card.bug,.card.roc,.card.gho,
@@ -75,7 +75,7 @@ button.btn.btn-info,button.btn.btn-primary
    width:100%;
    object-fit:contain;
   }
- 
+
  #poketype
  {
   height:100%;
@@ -86,7 +86,7 @@ button.btn.btn-info,button.btn.btn-primary
   background-image: url("https://vignette.wikia.nocookie.net/pokemongo/images/3/37/Original_loading_screen.png");
  }
 
-button.btn.btn-info,button.btn.btn-primary
+button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
 {
  min-width: 80%;
  margin: 0.2%;
@@ -95,27 +95,32 @@ button.btn.btn-info,button.btn.btn-primary
 
 
 /*Global Properties Across Devices*/
+button.btn.btn-dex {
+  color: white;
+  background-color:#7DD3FF;
+  border-color:#7DD3FF;
+}
 
 .whodat
 {
  margin-top:2.5%;
 }
 
-.pokemonOfAType 
+.pokemonOfAType
 {
 margin-top:0.5%;
-}  
+}
 
  hr
  {
   background-color:white;
  }
- 
+
  body
  {
   background-image:url("../Photos/pika.jpg");
  }
- 
+
 #loading {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
@@ -135,7 +140,7 @@ margin-top:0.5%;
  {
   background-color:white;
  }
- 
+
  .splitscreen
  {
   min-width:50%;
@@ -147,12 +152,12 @@ margin-top:0.5%;
   text-align:center;
   font-weight:bold;
  }
- 
+
 .active-pink-4 input[type=text]:focus:not([readonly]) {
    border: 1px solid #f48fb1;
    box-shadow: 0 0 0 1px #f48fb1;
 }
- 
+
 #poketype
 {
  font-size: 20px;
@@ -161,7 +166,7 @@ margin-top:0.5%;
  padding:5px;
  text-align:center;
 }
- 
+
 #poketype p
 {
  margin-bottom: 0;
@@ -181,7 +186,7 @@ margin-top:0.5%;
 {
  color:Grey;
 }
- 
+
 #typeIcon
 {
  margin-left:30px;
@@ -260,7 +265,7 @@ background:#AAAABB;
 {
 background:#F0A6F0;
 }
- 
+
 .card-text.header
 {
 background-color:white;
