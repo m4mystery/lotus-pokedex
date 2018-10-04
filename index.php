@@ -482,60 +482,67 @@ else
        echo $pokemonImage .'
        <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"><i class="fa fa-arrow-circle-right" style="font-size:50px" aria-hidden="true"></i></a><br/>';
 
-    //to disable pokedex entry until ready
+    //uncomment below to disable pokedex entry until ready
     //$pokemonEvolutionLine = "";
-    if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "")
+    if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "" or count($pokemonNumberNames)>1)
     {
     echo '
     <p><button type="button" class="btn btn-dex" data-toggle="collapse" data-target="#demo2">PokeDex Entry</button><br/>
     <div id="demo2" class="collapse">';
     $pieces = explode(">",$pokemonEvolutionLine);
     echo '<br/>
-    <div class="card">
+    <div class="card">';
+        if(isset($pokemonSpecies) and $pokemonSpecies !="")
+        {
+        echo '
         <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">'.$pokemonPokedexEntry.'</li>
-            <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
-            foreach ($pieces as $value)
+            <li class="list-group-item">'.$pokemonPokedexEntry.'</li>';
+            if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
             {
-                $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
-                if($value != "-")
-                {
-                    if ($value === end($pieces)) { //last
-                        if (strpos($value, '|') !== false)
-                        {
-                            $value  = str_replace("|","",$value);
-                            $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                            echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                        }
-                        else
-                        {
-                            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                        }
+             echo '
+             <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
+             foreach ($pieces as $value)
+             {
+                 $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+                 if($value != "-")
+                 {
+                     if ($value === end($pieces)) { //last
+                         if (strpos($value, '|') !== false)
+                         {
+                             $value  = str_replace("|","",$value);
+                             $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                             echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                         }
+                         else
+                         {
+                             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                         }
 
-                    }
-                    else
-                    {
-                        if (strpos($value, '|') !== false)
-                        {
-                            $value  = str_replace("|","",$value);
-                            $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                            echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                        }
-                        else
-                        {
-                            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                        }
-                    }
-                }
-                else
-                {
-                    echo '<li><p>This Pokemon has no evolution</p></li>';
-                }
+                     }
+                     else
+                     {
+                         if (strpos($value, '|') !== false)
+                         {
+                             $value  = str_replace("|","",$value);
+                             $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                             echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                         }
+                         else
+                         {
+                             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                         }
+                     }
+                 }
+                 else
+                 {
+                     echo '<li><p>This Pokemon has no evolution</p></li>';
+                 }
+              }
+              echo '</ul>
+              </li>';
+             }
             }
-            echo '</ul>
-            </li>';
-
             if (count($pokemonNumberNames)>1)
             {
              echo '<li class="list-group-item forme"><ul><b>Different Forms</b><br/><br/>';
