@@ -493,11 +493,11 @@ else
          $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
          if (count($megaWithoutSpaces) < 3)
          {
-          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
          }
          else
          {
-          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].'" target="_blank"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
          }
          $counter++;
         }
