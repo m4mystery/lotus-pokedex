@@ -522,57 +522,64 @@ else
     $pieces = explode(">",$pokemonEvolutionLine);
     echo '<br/>
     <div class="card">';
-        if(isset($pokemonSpecies) and $pokemonSpecies !="")
+        if($pokemonSpecies != "")
         {
         echo '
-        <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>
+        <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>';
+        }
+        else
+        {
+        echo '
+        <div class="card-header">Pokémon Details</div>';
+        }
+        echo '
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">'.$pokemonPokedexEntry.'</li>';
-            if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
-            {
-             echo '
-             <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
-             foreach ($pieces as $value)
-             {
-                 $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
-                 if($value != "-")
-                 {
-                     if ($value === end($pieces)) { //last
-                         if (strpos($value, '|') !== false)
-                         {
-                             $value  = str_replace("|","",$value);
-                             $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                             echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                         }
-                         else
-                         {
-                             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                         }
+          <li class="list-group-item">'.$pokemonPokedexEntry.'</li>';
+          if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
+          {
+           echo '
+           <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
+           foreach ($pieces as $value)
+           {
+               $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+               if($value != "-")
+               {
+                   if ($value === end($pieces)) { //last
+                       if (strpos($value, '|') !== false)
+                       {
+                           $value  = str_replace("|","",$value);
+                           $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                           echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                       }
+                       else
+                       {
+                           echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                       }
 
-                     }
-                     else
-                     {
-                         if (strpos($value, '|') !== false)
-                         {
-                             $value  = str_replace("|","",$value);
-                             $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                             echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                         }
-                         else
-                         {
-                             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                         }
-                     }
-                 }
-                 else
-                 {
-                     echo '<li><p>This Pokemon has no evolution</p></li>';
-                 }
-              }
-              echo '</ul>
-              </li>';
-             }
+                   }
+                   else
+                   {
+                       if (strpos($value, '|') !== false)
+                       {
+                           $value  = str_replace("|","",$value);
+                           $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                           echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                       }
+                       else
+                       {
+                           echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                       }
+                   }
+               }
+               else
+               {
+                   echo '<li><p>This Pokemon has no evolution</p></li>';
+               }
             }
+            echo '</ul>
+            </li>';
+           }
+
             if (count($pokemonNumberNames)>1)
             {
              echo '<li class="list-group-item forme"><ul><b>Different Forms</b><br/><br/>';
@@ -585,7 +592,16 @@ else
                $pokenamesArr = explode(" ",$pokenames);
                if(strtolower($megaArr[1])=="mega" and strtolower($pokenamesArr[0])=="mega")
                {
-                echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                $megaArrXYVariants = explode("|",$mega);
+                if(count($megaArrXYVariants)<2)
+                {
+                 echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                }
+                else
+                {
+                 $pokenamesArr = explode(" ",$pokenames);
+                 echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($pokenamesArr[1]).'-'.strtolower($pokenamesArr[2]).'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+                }
                }
                else
                {

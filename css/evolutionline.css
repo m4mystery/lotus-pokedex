@@ -52,3 +52,8 @@ li.list-group-item.evolve,li.list-group-item.forme
 {
  text-align:center;
 }
+
+ul
+{
+ display: block;
+}
