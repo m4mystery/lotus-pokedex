@@ -29,6 +29,7 @@
   <!--Evolution Line Icons-->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <!--Favicons-->
+  <!-- http://www.favicomatic.com/ -->
   <link rel="apple-touch-icon-precomposed" sizes="57x57" href="favicon/apple-touch-icon-57x57.png" />
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="favicon/apple-touch-icon-114x114.png" />
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="favicon/apple-touch-icon-72x72.png" />
@@ -132,7 +133,7 @@ if(!isset($_GET['Type1']))
 {
  echo '
 <div class="container">
-<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; Type from the Menu Above <br/> <img class="mainMenuPhoto" src="Photos\Mimikyu.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>';
 }
 else
@@ -210,7 +211,7 @@ function PrintDataCells($type, $dataSet, $effectivenessColour)
  echo '
      <div class="card '.substr(strtolower($type),0,3).'">
       <div class="card-body text-center">
-        <a href="?Type1='.$type.'&Type2=&search="><p class="card-text header">'.$type.'<img id="typeIcon" src="Icons/'.$type.'.png" height="20px" width="20px"></p></a>
+        <a href="?Type1='.ucwords(strtolower($type)).'&Type2=&search="><p class="card-text header">'.$type.'<img id="typeIcon" src="Icons/'.$type.'.png" height="20px" width="20px"></p></a>
         <p class="card-text header" id="'.$effectivenessColour.'">'.$dataSet. 'x - ' . $effectivenessColour . '</p>
       </div>
      </div>';
