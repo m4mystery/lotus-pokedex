@@ -132,8 +132,7 @@ if(!isset($_GET['Type1']))
 {
  echo '
 <div class="container">
-<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; Type from the Menu Above <br/> <img src="Photos\Mimikyu.png"> <br/> 上記のメニューでポケモンの種類を選択してください</p>
-
+<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; Type from the Menu Above <br/> <img class="mainMenuPhoto" src="Photos\Mimikyu.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>';
 }
 else
@@ -211,7 +210,7 @@ function PrintDataCells($type, $dataSet, $effectivenessColour)
  echo '
      <div class="card '.substr(strtolower($type),0,3).'">
       <div class="card-body text-center">
-        <p class="card-text header">'.$type.'<img id="typeIcon" src="Icons/'.$type.'.png" height="20px" width="20px"></p>
+        <a href="?Type1='.$type.'&Type2=&search="><p class="card-text header">'.$type.'<img id="typeIcon" src="Icons/'.$type.'.png" height="20px" width="20px"></p></a>
         <p class="card-text header" id="'.$effectivenessColour.'">'.$dataSet. 'x - ' . $effectivenessColour . '</p>
       </div>
      </div>';
@@ -464,7 +463,7 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
 if (!isset($PokemonValueCombined))
 {
 echo '<div class="container">
-<p class="font-weight-bold" id="poketype">Who\'s that Pokemon? Sorry, could not find it.<br/> <img  class="whodat missingno" src="https://i.ytimg.com/vi/vGioJbsxiYk/maxresdefault.jpg"> </p>
+<p class="font-weight-bold" id="poketype">Who\'s that Pokemon? Sorry, could not find it.<br/><img  class="whodat missingno" src="https://i.ytimg.com/vi/vGioJbsxiYk/maxresdefault.jpg"><iframe width="560" height="315" src="https://www.youtube.com/embed/F4Bi9cZ7YA0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
 </div>';
 }
 else
