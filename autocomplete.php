@@ -98,7 +98,7 @@ function autocomplete(inp, arr) {
 
 /*An array containing all the pokemon, to be updated by pulling from the CSV:*/
 var pokemonArr = [<?php
-    include("../poke-array.php");
+    include("poke-array.php");
 
     foreach($pokemonFullData as $pokeloop)
     {
@@ -107,7 +107,6 @@ var pokemonArr = [<?php
         echo '"'.$pokeloop . '",';
         }
     }
-
   ?>];
 
 /*initiate the autocomplete function on the "myInput" element, and pass along the pokemon array though a PHP array as possible autocomplete values:*/
