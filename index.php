@@ -57,67 +57,64 @@
 <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
- <form action="" method="get" id="pokeform">
-<div class="container">
- <div class="row">
-    <div class="splitscreen">
- <p class="SelectType">Select Type 1:</p>
- <select name="Type1" form="pokeform">
-  <option value="Bug" selected>Bug</option>
-  <option value="Dark">Dark</option>
-  <option value="Dragon">Dragon</option>
-  <option value="Electric">Electric</option>
-  <option value="Fairy">Fairy</option>
-  <option value="Fighting">Fighting</option>
-  <option value="Fire">Fire</option>
-  <option value="Flying">Flying</option>
-  <option value="Ghost">Ghost</option>
-  <option value="Grass">Grass</option>
-  <option value="Ground" >Ground</option>
-  <option value="Ice">Ice</option>
-  <option value="Normal">Normal</option>
-  <option value="Poison">Poison</option>
-  <option value="Psychic">Psychic</option>
-  <option value="Rock">Rock</option>
-  <option value="Steel">Steel</option>
-  <option value="Water">Water</option>
- </select>
-    </div>
-    <div class="splitscreen">
- <p class="SelectType">Select Type 2</p>
- <select name="Type2" form="pokeform">
-  <option value="" selected></option>
-  <option value="Bug">Bug</option>
-  <option value="Dark">Dark</option>
-  <option value="Dragon">Dragon</option>
-  <option value="Electric">Electric</option>
-  <option value="Fairy">Fairy</option>
-  <option value="Fighting">Fighting</option>
-  <option value="Fire">Fire</option>
-  <option value="Flying">Flying</option>
-  <option value="Ghost">Ghost</option>
-  <option value="Grass">Grass</option>
-  <option value="Ground" >Ground</option>
-  <option value="Ice">Ice</option>
-  <option value="Normal">Normal</option>
-  <option value="Poison">Poison</option>
-  <option value="Psychic">Psychic</option>
-  <option value="Rock">Rock</option>
-  <option value="Steel">Steel</option>
-  <option value="Water">Water</option>
- </select>
-</form>
-   </div>
-    </div>
-    <p>
-    <hr/>
-    <div class="active-pink-3 active-pink-4 mb-4 autocomplete">
-    <input autocomplete="off" class="form-control" id="myInput" type="text" name="search" placeholder="OR....search for them cuties" "font-weight-bold" form="pokeform" aria-label="Search"></div>
-    <hr/>
-    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">
-  </div>
-</div>
-
+      <form action="" method="get" id="pokeform">
+      <div class="container">
+        <div class="row">
+          <div class="splitscreen">
+            <p class="SelectType">Select Type 1:</p>
+            <select name="Type1" form="pokeform">
+              <option value="Bug" selected>Bug</option>
+              <option value="Dark">Dark</option>
+              <option value="Dragon">Dragon</option>
+              <option value="Electric">Electric</option>
+              <option value="Fairy">Fairy</option>
+              <option value="Fighting">Fighting</option>
+              <option value="Fire">Fire</option>
+              <option value="Flying">Flying</option>
+              <option value="Ghost">Ghost</option>
+              <option value="Grass">Grass</option>
+              <option value="Ground" >Ground</option>
+              <option value="Ice">Ice</option>
+              <option value="Normal">Normal</option>
+              <option value="Poison">Poison</option>
+              <option value="Psychic">Psychic</option>
+              <option value="Rock">Rock</option>
+              <option value="Steel">Steel</option>
+              <option value="Water">Water</option>
+            </select>
+          </div>
+          <div class="splitscreen">
+            <p class="SelectType">Select Type 2</p>
+            <select name="Type2" form="pokeform">
+              <option value="" selected></option>
+              <option value="Bug">Bug</option>
+              <option value="Dark">Dark</option>
+              <option value="Dragon">Dragon</option>
+              <option value="Electric">Electric</option>
+              <option value="Fairy">Fairy</option>
+              <option value="Fighting">Fighting</option>
+              <option value="Fire">Fire</option>
+              <option value="Flying">Flying</option>
+              <option value="Ghost">Ghost</option>
+              <option value="Grass">Grass</option>
+              <option value="Ground" >Ground</option>
+              <option value="Ice">Ice</option>
+              <option value="Normal">Normal</option>
+              <option value="Poison">Poison</option>
+              <option value="Psychic">Psychic</option>
+              <option value="Rock">Rock</option>
+              <option value="Steel">Steel</option>
+              <option value="Water">Water</option>
+            </select>
+          </div>
+        </div>
+        <hr/>
+        <div class="active-pink-3 active-pink-4 mb-4 autocomplete">
+        <input autocomplete="off" class="form-control" id="myInput" type="text" name="search" placeholder="OR....search for them cuties" "font-weight-bold" form="pokeform" aria-label="Search"></div>
+        <hr/>
+        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">
+      </div>
+      </form>
     </div>
   </div>
   <nav class="navbar navbar-dark bg-dark">
@@ -127,23 +124,8 @@
   </nav>
 </div>
 
-
+<!-- code for -->
 <?php
-if(!isset($_GET['Type1']))
-{
- echo '
-<div class="container">
-<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-</div>';
-}
-else
-{
-if($_GET['search'] != "")
-{
- $pokemonSearch = $_GET['search'];
-}
-else
-{
 
 $pokemonSearch ="";
 $pokemonDesc = "";
@@ -169,6 +151,21 @@ $SpAtk="";
 $SpDef="";
 $Speed = "";
 
+if(!isset($_GET['Type1']))
+{
+ echo '
+<div class="container">
+<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+</div>';
+}
+else
+{
+if($_GET['search'] != "")
+{
+ $pokemonSearch = $_GET['search'];
+}
+else
+{
  //https://forums.phpfreaks.com/topic/269574-searching-through-a-csv-and-only-returning-certain-rows-and-certain-columns/
  $PokemonValue1 = $_GET['Type1'];
  if ($_GET['Type1'] == $_GET['Type2'])
