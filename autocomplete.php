@@ -1,3 +1,4 @@
+<script>
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
@@ -113,3 +114,4 @@ var pokemonArr = [<?php
 autocomplete(document.getElementById("myInput"), pokemonArr);
 
 /* https://www.w3schools.com/howto/howto_js_autocomplete.asp */
+</script>
