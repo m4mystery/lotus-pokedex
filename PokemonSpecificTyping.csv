@@ -751,10 +751,10 @@ Separate evolutionary lines"
 675,Pangoro,Fighting,Dark,495,95,124,78,69,71,58,6,FALSE,,,,,,,,,
 676,Furfrou,Normal,,472,75,80,60,65,90,102,6,FALSE,,,,,,,,,
 677,Espurr,Psychic,,355,62,48,54,63,60,68,6,FALSE,,,,,,,,,
-678,MeowsticMale,Psychic,,466,74,48,76,83,81,104,6,FALSE,Meowstic,Meowstic-Male,,,,,,,"Males are mostly blue with white highlights, the inverse of females. Male's eyes are green with light blue scleras, while female's are red and yellow.
+678,Meowstic Male,Psychic,,466,74,48,76,83,81,104,6,FALSE,Meowstic,Meowstic-Male,,,,,,,"Males are mostly blue with white highlights, the inverse of females. Male's eyes are green with light blue scleras, while female's are red and yellow.
 Unlike most Pokémon, the moves Meowstic can learn vary by gender, with males learning more status moves and females learning more attack moves.
 Male Meowstic have the Hidden Ability Prankster, while female Meowstic have the Hidden Ability Competitive."
-678,MeowsticFemale,Psychic,,466,74,48,76,83,81,104,6,FALSE,Meowstic,Meowstic-Female,,,,,,,"Males are mostly blue with white highlights, the inverse of females. Male's eyes are green with light blue scleras, while female's are red and yellow.
+678,Meowstic Female,Psychic,,466,74,48,76,83,81,104,6,FALSE,Meowstic,Meowstic-Female,,,,,,,"Males are mostly blue with white highlights, the inverse of females. Male's eyes are green with light blue scleras, while female's are red and yellow.
 Unlike most Pokémon, the moves Meowstic can learn vary by gender, with males learning more status moves and females learning more attack moves.
 Male Meowstic have the Hidden Ability Prankster, while female Meowstic have the Hidden Ability Competitive."
 679,Honedge,Steel,Ghost,325,45,80,100,35,37,28,6,FALSE,,,,,,,,,
