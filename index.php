@@ -157,7 +157,7 @@ $pokemonEvolutionLine = array();
 //Graph variables
 $HP="";
 $Attack="";
-$Defense="";
+$Defence="";
 $SpAtk="";
 $SpDef="";
 $Speed = "";
@@ -166,7 +166,7 @@ if(!isset($_GET['Type1']))
 {
  echo '
 <div class="container">
-<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Updates:</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/barelysuperman/lists/pokemon-go?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>';
 }
 else
@@ -248,7 +248,7 @@ function SetPokemonSpecificTyping($data)
  //Setting Pokemon Descriptors globally
  global $PokemonValueCombined,$pokemonDesc;
  //Setting Graph Stats Globally
- global $HP,$Attack,$Defense,$SpAtk,$SpDef,$Speed;
+ global $HP,$Attack,$Defence,$SpAtk,$SpDef,$Speed;
  //Setting Mega Evolution Data Globally
  global $mega,$megastone;
  //Setting Pokedex Entry Data Globally
@@ -266,7 +266,7 @@ function SetPokemonSpecificTyping($data)
  //Setting Graph Data
  $HP=$data[5];
  $Attack=$data[6];
- $Defense=$data[7];
+ $Defence=$data[7];
  $SpAtk=$data[8];
  $SpDef=$data[9];
  $Speed = $data[10];
@@ -693,13 +693,18 @@ else
     $PokemonGoBaseAttack = Round($ScaledAttackStat * $PokemonGoSpeedMod);
 
     //Generating Base Defence combining Special Def. And Base Def.
-    $HigherDefenceStat = MAX($Defense,$SpDef);
-    $LowerDefenceStat = MIN($Defense,$SpDef);
-    $ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(1/8)*$LowerDefenceStat));
+    $HigherDefenceStat = MAX($Defence,$SpDef);
+    $LowerDefenceStat = MIN($Defence,$SpDef);
+    //In October 2018, the stats were changed making the below no longer valid
+    //$ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(1/8)*$LowerDefenceStat));
+    //https://www.reddit.com/r/TheSilphRoad/comments/9ofymc/new_defence_stat_formula/
+    $ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(3/8)*$LowerDefenceStat));
     $PokemonGoBaseDefence = Round($ScaledDefenceStat * $PokemonGoSpeedMod);
 
     //Generating Base Stamina (HP)
-    $PokemonGoBaseHP = 2*$HP;
+    //In October 2018, the stats were changed making the below no longer valid (same as defence stat)
+    //$PokemonGoBaseHP = 2*$HP;
+    $PokemonGoBaseHP =  floor(($HP*1.75)+50);
 
     //Rounding down the Pokemon MAX CP based on the stats above pow() - is power of, floor() rounds down to the nearest integer
     $CP = floor((($PokemonGoBaseAttack+$IV_Attack)*pow(($PokemonGoBaseDefence+$IV_Defence),0.5)*pow(($PokemonGoBaseHP+$IV_HP),0.5)*pow($CPM,2))/10);
