@@ -710,7 +710,7 @@ else
 
     //Level of the IVs as you would get through Appraisals
     $IV_Attack = 15;
-    $IV_Defence = 15;
+    $IV_Defense = 15;
     $IV_HP = 15;
 
     //Generating Base Speed
@@ -722,17 +722,17 @@ else
     $ScaledAttackStat = ROUND(2*((7/8)*$HigherAttackStat+(1/8)*$LowerAttackStat));
     $PokemonGoBaseAttack = Round($ScaledAttackStat * $PokemonGoSpeedMod);
 
-    //Generating Base Defence combining Special Def. And Base Def.
-    $HigherDefenceStat = MAX($Defense,$SpDef);
-    $LowerDefenceStat = MIN($Defense,$SpDef);
-    $ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(1/8)*$LowerDefenceStat));
-    $PokemonGoBaseDefence = Round($ScaledDefenceStat * $PokemonGoSpeedMod);
+    //Generating Base Defense combining Special Def. And Base Def.
+    $HigherDefenseStat = MAX($Defense,$SpDef);
+    $LowerDefenseStat = MIN($Defense,$SpDef);
+    $ScaledDefenseStat = ROUND(2*((7/8)*$HigherDefenseStat+(1/8)*$LowerDefenseStat));
+    $PokemonGoBaseDefense = Round($ScaledDefenseStat * $PokemonGoSpeedMod);
 
     //Generating Base Stamina (HP)
     $PokemonGoBaseHP = 2*$HP;
 
     //Rounding down the Pokemon MAX CP based on the stats above pow() - is power of, floor() rounds down to the nearest integer
-    $CP = floor((($PokemonGoBaseAttack+$IV_Attack)*pow(($PokemonGoBaseDefence+$IV_Defence),0.5)*pow(($PokemonGoBaseHP+$IV_HP),0.5)*pow($CPM,2))/10);
+    $CP = floor((($PokemonGoBaseAttack+$IV_Attack)*pow(($PokemonGoBaseDefense+$IV_Defense),0.5)*pow(($PokemonGoBaseHP+$IV_HP),0.5)*pow($CPM,2))/10);
     echo '
         <p><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo3">Stats</button></p>
         <div id="demo3" class="collapse">

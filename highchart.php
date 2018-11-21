@@ -72,7 +72,7 @@ Highcharts.chart('StatsContainer', {
 var PoGoCP = <?php echo $CP; ?>;
 var PoGoHP = <?php echo $PokemonGoBaseHP; ?>;
 var PoGoAttack = <?php echo $PokemonGoBaseAttack; ?>;
-var PoGoDefense = <?php echo $PokemonGoBaseDefence; ?>;
+var PoGoDefense = <?php echo $PokemonGoBaseDefense; ?>;
 var PoGoSpeed = <?php echo $PokemonGoSpeedMod; ?>;
 
 
@@ -126,7 +126,7 @@ Highcharts.chart('PogoStatsContainer', {
     name: 'HP',
     data: [PoGoHP]
   }, {
-    name: 'Defence',
+    name: 'Defense',
     data: [PoGoDefense]
   },
   {
