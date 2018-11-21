@@ -396,7 +396,7 @@ function EasterEggSprite($easterEggValue)
 if(is_numeric($pokemonSearch))
 {
   EasterEggSprite($pokemonSearch);
-  echo EasterEggSprite($pokemonSearch);
+
   if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
   {
 
@@ -436,7 +436,7 @@ else
      SetPokemonSpecificTyping($data);
 
      //Setting Pokemon Link and Image
-     SetPokemonURLs($data);
+     SetPokemonURLs($data,"");
     }
   }
   fclose($handle);
