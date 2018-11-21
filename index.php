@@ -157,16 +157,19 @@ $pokemonEvolutionLine = array();
 //Graph variables
 $HP="";
 $Attack="";
-$Defence="";
+$Defense="";
 $SpAtk="";
 $SpDef="";
 $Speed = "";
+
+//Easter Egg Values
+$easterEggSprite = FALSE;
 
 if(!isset($_GET['Type1']))
 {
  echo '
 <div class="container">
-<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Updates:</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/barelysuperman/lists/pokemon-go?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>';
 }
 else
@@ -248,7 +251,7 @@ function SetPokemonSpecificTyping($data)
  //Setting Pokemon Descriptors globally
  global $PokemonValueCombined,$pokemonDesc;
  //Setting Graph Stats Globally
- global $HP,$Attack,$Defence,$SpAtk,$SpDef,$Speed;
+ global $HP,$Attack,$Defense,$SpAtk,$SpDef,$Speed;
  //Setting Mega Evolution Data Globally
  global $mega,$megastone;
  //Setting Pokedex Entry Data Globally
@@ -266,7 +269,7 @@ function SetPokemonSpecificTyping($data)
  //Setting Graph Data
  $HP=$data[5];
  $Attack=$data[6];
- $Defence=$data[7];
+ $Defense=$data[7];
  $SpAtk=$data[8];
  $SpDef=$data[9];
  $Speed = $data[10];
@@ -283,7 +286,7 @@ function SetPokemonSpecificTyping($data)
  $genderNotes = $data[21];
 }
 
-function SetPokemonURLs($data)
+function SetPokemonURLs($data,$easterEgg)
 {
  //setting pokemon link and image global
  global $pokemonImage,$pokeDexLink;
@@ -303,16 +306,17 @@ function SetPokemonURLs($data)
      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.jpg">';
    }
  }
- elseif (strtolower($data[1]) == strtolower("Meltan"))
- {
-     $pokemonImage = '<img class="whodat" src="https://cdn.bulbagarden.net/upload/thumb/3/30/Meltan.png/500px-Meltan.png"><style>.fa{display:none}</style>';
- }
  else
  {
   if($data[13] == "")
   {
     $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.$dataWithoutSpaces.'" target="_blank">[PokeDex Entry]</a>';
-    $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($dataWithoutSpaces).'.jpg">';
+
+    //Not setting this just for easter eggs, new sprites, or shiny pokemon. Value set within numeric
+    if ($easterEgg == FALSE)
+    {
+     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($dataWithoutSpaces).'.jpg">';
+    }
   }
   else
   {
@@ -371,23 +375,40 @@ function SeperatePokemon($pokemonList,$newPage)
  }
 }
 
+//EasterEgg that will affect what the sprite looks like
+function EasterEggSprite($easterEggValue)
+{
+ global $pokemonImage, $pokemonSearch, $easterEggSprite;
+ //Eevee community day sprite
+ if ($pokemonSearch == 110818 or $pokemonSearch == 120818)
+ {
+  $pokemonImage = '<img class="whodat" src="Sprites/Shiny/Eevee.gif">';
+  $pokemonSearch = "133";
+  $easterEggSprite = TRUE;
+ }
+
+  return $easterEggSprite;
+}
+
 /*----Functions End----*/
 
 //When the Pokemon is searched by number
 if(is_numeric($pokemonSearch))
 {
+  EasterEggSprite($pokemonSearch);
+  echo EasterEggSprite($pokemonSearch);
   if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
   {
+
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
     {
       if ($data[0]==$pokemonSearch)
       {
-
       //Setting variables
       SetPokemonSpecificTyping($data);
 
       //Setting Pokemon Link and Image
-      SetPokemonURLs($data);
+      SetPokemonURLs($data, EasterEggSprite($pokemonSearch));
 
        //Stop it going to the Alolan ones or variants
        break;
@@ -693,18 +714,13 @@ else
     $PokemonGoBaseAttack = Round($ScaledAttackStat * $PokemonGoSpeedMod);
 
     //Generating Base Defence combining Special Def. And Base Def.
-    $HigherDefenceStat = MAX($Defence,$SpDef);
-    $LowerDefenceStat = MIN($Defence,$SpDef);
-    //In October 2018, the stats were changed making the below no longer valid
-    //$ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(1/8)*$LowerDefenceStat));
-    //https://www.reddit.com/r/TheSilphRoad/comments/9ofymc/new_defence_stat_formula/
-    $ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(3/8)*$LowerDefenceStat));
+    $HigherDefenceStat = MAX($Defense,$SpDef);
+    $LowerDefenceStat = MIN($Defense,$SpDef);
+    $ScaledDefenceStat = ROUND(2*((7/8)*$HigherDefenceStat+(1/8)*$LowerDefenceStat));
     $PokemonGoBaseDefence = Round($ScaledDefenceStat * $PokemonGoSpeedMod);
 
     //Generating Base Stamina (HP)
-    //In October 2018, the stats were changed making the below no longer valid (same as defence stat)
-    //$PokemonGoBaseHP = 2*$HP;
-    $PokemonGoBaseHP =  floor(($HP*1.75)+50);
+    $PokemonGoBaseHP = 2*$HP;
 
     //Rounding down the Pokemon MAX CP based on the stats above pow() - is power of, floor() rounds down to the nearest integer
     $CP = floor((($PokemonGoBaseAttack+$IV_Attack)*pow(($PokemonGoBaseDefence+$IV_Defence),0.5)*pow(($PokemonGoBaseHP+$IV_HP),0.5)*pow($CPM,2))/10);
