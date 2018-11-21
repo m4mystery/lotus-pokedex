@@ -555,8 +555,17 @@ else
        echo '
        <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber-1) .'"><i class="fa fa-arrow-circle-left" style="font-size:50px" aria-hidden="true"></i></a>';
        }
+       //last pokemon arrow. Too tired to do it programmatically, couldn't think of solution, hard coded to melmetal.
+       if ($pokemonNumber != 809)
+       {
        echo $pokemonImage .'
        <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"><i class="fa fa-arrow-circle-right" style="font-size:50px" aria-hidden="true"></i></a><br/>';
+       }
+       else
+       {
+        echo $pokemonImage .'
+        <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"></i></a><br/>';
+       }
 
     //uncomment below to disable pokedex entry until ready
     //$pokemonEvolutionLine = "";
