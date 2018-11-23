@@ -169,7 +169,7 @@ if(!isset($_GET['Type1']))
 {
  echo '
 <div class="container">
-<p class="font-weight-bold" id="poketype">Select Your Pok&eacute; type from the menu above <br/> <img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="font-weight-bold" id="poketype">Select your Pok&eacute; type from the menu above <br/> 3D Models have shiny forms. Just click on them <br/><img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>';
 }
 else
@@ -243,6 +243,37 @@ function isEmptyOutput($val1,$output)
   }
 }
 
+//Function that toggles the an image using javascript (for switching between shiny and non-shiny)
+function ShinyCheck($regular,$shiny)
+{
+     echo '
+     <script>
+     $(document).ready(function ()
+     {
+       $(".whodat").click(function ()
+       {
+        $(this).toggleClass("active");
+        if($(this).hasClass("active")){
+       	$(this).attr("src","'.$shiny.'.gif");
+        }
+        else
+        {
+         $(this).attr("src","'.$regular.'.gif");
+        }
+
+        var x = document.getElementById("shiny");
+        if (x.style.display === "none")
+        {
+           x.style.display = "block";
+        } else
+        {
+           x.style.display = "none";
+        }
+       });
+     });
+     </script>';
+}
+
 //Function that pulls information from the datafile
 function SetPokemonSpecificTyping($data)
 {
@@ -291,19 +322,63 @@ function SetPokemonURLs($data,$easterEgg)
  //setting pokemon link and image global
  global $pokemonImage,$pokeDexLink;
 
+ //Setting variable for sprite image location
+ $spriteFileLocation = "Sprites/";
+ $shinySpriteFileLocation = "Sprites/Shiny/";
+
  //Checking Search Query for special cases such as mega evolutions etc...
  $dataWithoutFullstopsCommas = preg_replace('/[.,]/', '', $data[1]);
  $dataWithoutSpaces = preg_replace('/\s+/', '-', $dataWithoutFullstopsCommas);
  $strArray = explode(' ',$data[1]);
+
+ //Check if the first word is Mega
  if ($strArray[0] == "Mega")
  {
+   //Check if it's something that has more than two words, like mega charizard x
    if (sizeof($strArray) == 2)
    {
+    //Checks if the 3D sprite exists for that pokemon
+    if (file_exists($spriteFileLocation.$strArray[1].'_Mega.gif'))
+    {
+     //Setting pokemon image based on the sprite
+     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$strArray[1].'_Mega.gif">';
+
+     //Checking if Shiny Sprite Exists
+     if (file_exists($shinySpriteFileLocation.$strArray[1].'_Mega.gif'))
+     {
+      //Enables clicking of regular to get shiny
+      ShinyCheck($spriteFileLocation.$strArray[1]."_Mega", $shinySpriteFileLocation.$strArray[1]."_Mega");
+     }
+
+    }
+    //If the 3D sprite does not exist then load from PokemonDB
+    else
+    {
      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'.jpg">';
+    }
    }
+   //This is the condition for mega charizard x / mewtwo y and the like
    else
    {
+    //Checks if the 3D sprite exists for that pokemon
+    if (file_exists($spriteFileLocation.$strArray[1].'_Mega'.$strArray[2].'.gif'))
+    {
+     //Setting pokemon image based on the sprite
+     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$strArray[1].'_Mega'.$strArray[2].'.gif">';
+
+     //Checking if Shiny Sprite Exists
+     if (file_exists($shinySpriteFileLocation.$strArray[1].'_Mega'.$strArray[2].'.gif'))
+     {
+      //Enables clicking of regular to get shiny
+      ShinyCheck($spriteFileLocation.$strArray[1]."_Mega".$strArray[2], $shinySpriteFileLocation.$strArray[1].'_Mega'.$strArray[2]);
+     }
+
+    }
+    //If the 3D sprite does not exist then load from PokemonDB
+    else
+    {
      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.jpg">';
+    }
    }
  }
  else
@@ -311,26 +386,70 @@ function SetPokemonURLs($data,$easterEgg)
   if($data[13] == "")
   {
     $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.$dataWithoutSpaces.'" target="_blank">[PokeDex Entry]</a>';
-
-    //Not setting this just for easter eggs, new sprites, or shiny pokemon. Value set within numeric
-    if ($easterEgg == FALSE)
+    //Testing if 3D sprite exists on server
+    if (file_exists($spriteFileLocation.$data[1].'.gif'))
     {
-     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($dataWithoutSpaces).'.jpg">';
+     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$data[1].'.gif">';
+
+     if (file_exists($shinySpriteFileLocation.$data[1].'.gif'))
+     {
+      ShinyCheck($spriteFileLocation.$data[1], $shinySpriteFileLocation.$data[1]);
+     }
+
+    }
+    else
+    {
+     //Not setting this just for easter eggs, new sprites, or shiny pokemon. Value set within numeric
+     if ($easterEgg == FALSE)
+     {
+      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($dataWithoutSpaces).'.jpg">';
+     }
     }
   }
   else
   {
-    $specificPokemonLinkArr = explode("-",$data[13]);
-   // for some reason castform isn't a JPG with it's alternative forms so I have to have this clause
+   $specificPokemonLinkArr = explode("-",$data[14]);
+   //Setting the link
+   $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+
+   //Capturing a castform filetype change in Pokemondb
    if(strtolower($specificPokemonLinkArr[0]) == "castform")
    {
-    $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
-    $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($data[14]).'.png">';
+    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+    {
+     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
+
+     if (file_exists($shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+     {
+      ShinyCheck($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])), $shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])));
+     }
+
+    }
+    // for some reason castform isn't a JPG in Pokemon DB hence this clause with it's alternative forms so I have to have this clause
+    else
+    {
+     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($data[14]).'.png">';
+    }
    }
+   //Capturing everything else that has a specific link
    else
    {
-    $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
-    $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+    //Changing items with the specific image link to 3D sprites
+    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+    {
+     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
+
+     if (file_exists($shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+     {
+      ShinyCheck($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])), $shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])));
+     }
+
+    }
+    //Everything else that isn't a 3D sprite redirected to pokemonDB
+    else
+    {
+     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+    }
    }
   }
  }
@@ -566,7 +685,7 @@ else
         echo $pokemonImage .'
         <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"></i></a><br/>';
        }
-
+    echo '<img id="shiny" style="display:none;" src="Photos/shiny.gif" /> ';
     //uncomment below to disable pokedex entry until ready
     //$pokemonEvolutionLine = "";
     if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "" or count($pokemonNumberNames)>1 or $genderNotes != "" or $professorLotusNotes != "")
