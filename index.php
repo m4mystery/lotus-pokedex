@@ -5,21 +5,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--CSS-->
-    <!--bootstrap 3.3.1 CSS-->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!--Main Page-->
-  <link rel="stylesheet" type="text/css" href="css/PokemonSpecificTyping.css">
-    <!--Search bar-->
-  <link rel="stylesheet" type="text/css" href="css/autocomplete.css">
-    <!--Charts-->
-  <link rel="stylesheet" type="text/css" href="css/highchart.css">
-    <!--Evolution line-->
-  <link rel="stylesheet" type="text/css" href="css/evolutionline.css">
+   <!--bootstrap 3.3.1 CSS-->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   <!--bootstrap toggle CSS-->
+   <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+   <!--Main Page-->
+   <link rel="stylesheet" type="text/css" href="css/PokemonSpecificTyping.css">
+   <!--Search bar-->
+   <link rel="stylesheet" type="text/css" href="css/autocomplete.css">
+   <!--Charts-->
+   <link rel="stylesheet" type="text/css" href="css/highchart.css">
+   <!--Evolution line-->
+   <link rel="stylesheet" type="text/css" href="css/evolutionline.css">
   <!--JS-->
   <!--bootstrap and jquery-->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!--Bootstrap toggle button-->
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
   <!--<script src="js/loading.js"></script>-->
   <!--highcharts and bootstrap-->
   <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -113,6 +117,40 @@
         <input autocomplete="off" class="form-control" id="myInput" type="text" name="search" placeholder="OR....search for them cuties" "font-weight-bold" form="pokeform" aria-label="Search"></div>
         <hr/>
         <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">
+        <hr/>
+        <input id="dataOpt" type="checkbox" checked data-toggle="toggle" data-size="large" data-onstyle="success" data-offstyle="danger" data-on="3D" data-off="2D">
+        <label for="HighDataOpt">3D Models are quite data intensive (for some people). If you're low on data, turn on 2D models with this switch, note you'll also lose shiny models</label>
+        <script>
+        //A very extra way of setting the name for a value but I am keeping it here because it's good info.
+        $("#dataOpt").attr("name", "HighDataOpt");
+
+        //Setting GET Parameter function
+        var getUrlParameter = function getUrlParameter(sParam)
+        {
+         var sPageURL = window.location.search.substring(1),
+             sURLVariables = sPageURL.split('&'),
+             sParameterName,
+             i;
+
+         for (i = 0; i < sURLVariables.length; i++)
+         {
+             sParameterName = sURLVariables[i].split('=');
+             if (sParameterName[0] === sParam)
+             {
+              return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+             }
+         }
+        };
+
+        //Getting GET parameter
+        var dataoptGET = getUrlParameter('HighDataOpt');
+        var type1GET = getUrlParameter('Type1');
+
+        if (typeof dataoptGET === "undefined" && typeof type1GET !== "undefined")
+        {
+         $('#dataOpt').bootstrapToggle('off');
+        }
+        </script>
       </div>
       </form>
     </div>
@@ -134,6 +172,7 @@ $pokemonDesc = "";
 $pokeDexLink = "";
 $pokemonImage = "";
 $pokemonNumber = 0;
+
 
 //for pokemon that have more than one variation
 $pokemonNumberNames = array();
@@ -165,11 +204,12 @@ $Speed = "";
 //Easter Egg Values
 $easterEggSprite = FALSE;
 
+//Checking if user has set the type (Get Parameter)
 if(!isset($_GET['Type1']))
 {
  echo '
 <div class="container">
-<p class="font-weight-bold" id="poketype">Select your Pok&eacute; type from the menu above <br/> 3D Models have shiny forms. Just click on them <br/><img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><b>Pokemon Go Updates</b><br/><a class="twitter-timeline" data-height="800" href="https://twitter.com/LeekDuck?ref_src=twsrc%5Etfw">Tweets by LeekDuck</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p class="font-weight-bold" id="poketype">Select your Pok&eacute; type from the menu above <br/> 3D Models have shiny forms. Just click on them <br/><img class="mainMenuPhoto" src="Photos\lotus.png"> <br/> 上記のメニューでポケモンの種類を選択してください<br/><br/><br/><a class="twitter-timeline" data-height="800" data-theme="light" href="https://twitter.com/barelysuperman/lists/pokemon-go?ref_src=twsrc%5Etfw">Pokemon Updates</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>';
 }
 else
@@ -326,6 +366,12 @@ function SetPokemonURLs($data,$easterEgg)
  $spriteFileLocation = "Sprites/";
  $shinySpriteFileLocation = "Sprites/Shiny/";
 
+ //Checking if the User has left it in 3D mode or set it to 2D mode
+ if (isset($_GET['HighDataOpt']))
+ {
+  $HighDataOption = $_GET['HighDataOpt'];
+ }
+
  //Checking Search Query for special cases such as mega evolutions etc...
  $dataWithoutFullstopsCommas = preg_replace('/[.,]/', '', $data[1]);
  $dataWithoutSpaces = preg_replace('/\s+/', '-', $dataWithoutFullstopsCommas);
@@ -338,7 +384,7 @@ function SetPokemonURLs($data,$easterEgg)
    if (sizeof($strArray) == 2)
    {
     //Checks if the 3D sprite exists for that pokemon
-    if (file_exists($spriteFileLocation.$strArray[1].'_Mega.gif'))
+    if (file_exists($spriteFileLocation.$strArray[1].'_Mega.gif') and $HighDataOption == "on")
     {
      //Setting pokemon image based on the sprite
      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$strArray[1].'_Mega.gif">';
@@ -361,7 +407,7 @@ function SetPokemonURLs($data,$easterEgg)
    else
    {
     //Checks if the 3D sprite exists for that pokemon
-    if (file_exists($spriteFileLocation.$strArray[1].'_Mega'.$strArray[2].'.gif'))
+    if (file_exists($spriteFileLocation.$strArray[1].'_Mega'.$strArray[2].'.gif') and $HighDataOption == "on")
     {
      //Setting pokemon image based on the sprite
      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$strArray[1].'_Mega'.$strArray[2].'.gif">';
@@ -385,9 +431,10 @@ function SetPokemonURLs($data,$easterEgg)
  {
   if($data[13] == "")
   {
+    echo $HighDataOption;
     $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.$dataWithoutSpaces.'" target="_blank">[PokeDex Entry]</a>';
     //Testing if 3D sprite exists on server
-    if (file_exists($spriteFileLocation.$data[1].'.gif'))
+    if (file_exists($spriteFileLocation.$data[1].'.gif') and $HighDataOption == "on")
     {
      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$data[1].'.gif">';
 
@@ -415,7 +462,7 @@ function SetPokemonURLs($data,$easterEgg)
    //Capturing a castform filetype change in Pokemondb
    if(strtolower($specificPokemonLinkArr[0]) == "castform")
    {
-    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif') and isset($HighDataOption))
     {
      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
 
@@ -435,7 +482,7 @@ function SetPokemonURLs($data,$easterEgg)
    else
    {
     //Changing items with the specific image link to 3D sprites
-    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif') and isset($HighDataOption) )
     {
      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
 
@@ -643,10 +690,13 @@ else
 
       if ($data[0] == $PokemonValueCombined)
       {
+
        echo '
        <div class="container">
+
        <div id="poketype">
        <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>';
+       //Setting the Pokemon Type to be displayed on page
        if (isset($mega) && $mega!="")
        {
         $megaStonePieces = explode("|",$megastone);
@@ -667,6 +717,7 @@ else
          $counter++;
         }
        echo '<br/>';
+       echo '<p>Gender Goes here</p>';
        }
        echo $pokeDexLink . '<br/>';
        if($pokemonNumber > 1)
@@ -685,9 +736,11 @@ else
         echo $pokemonImage .'
         <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .'"></i></a><br/>';
        }
+
+    //Shiny Animation
     echo '<img id="shiny" style="display:none;" src="Photos/shiny.gif" /> ';
-    //uncomment below to disable pokedex entry until ready
-    //$pokemonEvolutionLine = "";
+
+    //Setting the evolution line items
     if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "" or count($pokemonNumberNames)>1 or $genderNotes != "" or $professorLotusNotes != "")
     {
 

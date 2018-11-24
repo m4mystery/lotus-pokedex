@@ -25,40 +25,50 @@
   background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
  }
 
-button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
-{
- min-width: 40%;
- margin: 0.2%;
-}
+ button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
+ {
+  min-width: 40%;
+  margin: 0.2%;
  }
+
+ #shiny
+ {
+  width:5%;
+ }
+}
 
 /* Landscape */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: landscape)
 {
 
  .card
-  {
-   /*background-repeat:no-repeat;*/
-   min-width:500px;
-  }
+ {
+  /*background-repeat:no-repeat;*/
+  min-width:500px;
+ }
 
  .whodat
-  {
-   height:100%;
-   width:100%;
-   object-fit:contain;
-  }
+ {
+  height:100%;
+  width:100%;
+  object-fit:contain;
+ }
 
-  #loading
-  {
-   background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
-  }
+ #loading
+ {
+  background-image: url("https://pre00.deviantart.net/a124/th/pre/f/2018/150/4/c/pokemon_for_switch_by_herobrinehd__nintendo_by_herobrinehd-dccy5dd.png");
+ }
 
-button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
-{
- min-width: 40%;
- margin: 0.2%;
-}
+ button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
+ {
+  min-width: 40%;
+  margin: 0.2%;
+ }
+
+ #shiny
+ {
+  width:5%;
+ }
 }
 
 /* Portrait */
@@ -87,28 +97,40 @@ button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
   background-image: url("https://vignette.wikia.nocookie.net/pokemongo/images/3/37/Original_loading_screen.png");
  }
 
+ button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
+ {
+  min-width: 80%;
+  margin: 0.2%;
+ }
 
-button.btn.btn-info,button.btn.btn-primary,button.btn.btn-dex
-{
- min-width: 80%;
- margin: 0.2%;
-}
+ #shiny
+ {
+  width:10%;
+ }
 }
 
 
 /*Global Properties Across Devices*/
-button.btn.btn-dex {
-  color: white;
-  background-color:#7DD3FF;
-  border-color:#7DD3FF;
+button.btn.btn-dex
+{
+ color: white;
+ background-color:#7DD3FF;
+ border-color:#7DD3FF;
 }
 
-img.mainMenuPhoto {
-    height: 250px;
+label
+{
+ color:white;
+}
+
+img.mainMenuPhoto
+{
+ height: 250px;
 }
 
 .whodat
 {
+ max-height:200px;
  margin-top:2.5%;
 }
 
@@ -287,5 +309,4 @@ margin-bottom:-1px;
  display: block;
  margin-left: auto;
  margin-right: auto;
- width: 5%;
 }
