@@ -431,7 +431,6 @@ function SetPokemonURLs($data,$easterEgg)
  {
   if($data[13] == "")
   {
-    echo $HighDataOption;
     $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.$dataWithoutSpaces.'" target="_blank">[PokeDex Entry]</a>';
     //Testing if 3D sprite exists on server
     if (file_exists($spriteFileLocation.$data[1].'.gif') and $HighDataOption == "on")
