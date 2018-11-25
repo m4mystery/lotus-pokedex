@@ -172,6 +172,7 @@ $pokemonDesc = "";
 $pokeDexLink = "";
 $pokemonImage = "";
 $pokemonNumber = 0;
+$specificPokemonName = "";
 
 
 //for pokemon that have more than one variation
@@ -296,25 +297,74 @@ function ShinyCheck($regular,$shiny)
      <script>
      $(document).ready(function ()
      {
+       function SettingShiny(genderParameter)
+       {
+
+        //setting the active class so that it can switch
+         if($(".whodat").hasClass("active"))
+         {
+        	 $(".whodat").attr("src","'.$shiny.'"+genderParameter+".gif");
+         }
+         else
+         {
+          $(".whodat").attr("src","'.$regular.'"+genderParameter+".gif");
+         }
+
+         var x = document.getElementById("shiny");
+         if (x.style.display === "none")
+         {
+            x.style.display = "block";
+         } else
+         {
+            x.style.display = "none";
+         }
+
+         $(".whodat").toggleClass("active");
+       }
+
        $(".whodat").click(function ()
        {
-        $(this).toggleClass("active");
-        if($(this).hasClass("active")){
-       	$(this).attr("src","'.$shiny.'.gif");
+
+        //Checking if the sprite is female
+        if($(this).hasClass("female"))
+        {
+         SettingShiny("_Female");
         }
+        //If the sprite is male
         else
         {
-         $(this).attr("src","'.$regular.'.gif");
+         SettingShiny("");
         }
+       });
 
-        var x = document.getElementById("shiny");
-        if (x.style.display === "none")
-        {
-           x.style.display = "block";
-        } else
-        {
-           x.style.display = "none";
-        }
+     });
+     </script>';
+}
+
+//Function that toggles the image from the male and female variant.
+//Uses Team Rocket as the gender identifiers.
+function GenderSpriteChange($pokemon)
+{
+     echo '
+     <script>
+     $(document).ready(function ()
+     {
+       $("#genderMale").click(function ()
+       {
+        $(".whodat").addClass("active");
+        $(".whodat").removeClass("female");
+       	$(".whodat").attr("src","Sprites/'.$pokemon.'.gif");
+       	//Hiding the shiny loading sprite
+       	document.getElementById("shiny").style.display = "none";
+       });
+       $("#genderFemale").click(function ()
+       {
+        $(".whodat").addClass("active");
+        $(".whodat").addClass("female");
+        $(".whodat").removeClass("male");
+       	$(".whodat").attr("src","Sprites/'.$pokemon.'_Female.gif");
+       	//Hiding the shiny loading sprite
+       	document.getElementById("shiny").style.display = "none";
        });
      });
      </script>';
@@ -326,7 +376,7 @@ function SetPokemonSpecificTyping($data)
  //Setting Pokemon Pokemon name and numbers Globally
  global $pokemonNumber,$PokemonValue1,$PokemonValue2;
  //Setting Pokemon Descriptors globally
- global $PokemonValueCombined,$pokemonDesc;
+ global $PokemonValueCombined,$pokemonDesc, $specificPokemonName;
  //Setting Graph Stats Globally
  global $HP,$Attack,$Defense,$SpAtk,$SpDef,$Speed;
  //Setting Mega Evolution Data Globally
@@ -342,6 +392,7 @@ function SetPokemonSpecificTyping($data)
  //Setting Pokemon Descriptors
  $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
  $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
+ $specificPokemonName = $data[1];
 
  //Setting Graph Data
  $HP=$data[5];
@@ -512,6 +563,10 @@ function SetPokemonURLs($data,$easterEgg)
 function SeperatePokemon($pokemonList,$newPage)
 {
  $currentGen = "";
+ if(isset($_GET['HighDataOpt']))
+ {
+  $highDataOptGET = "&HighDataOpt=on";
+ }
  foreach ($pokemonList as $pokeloop)
  {
    if($pokeloop != "")
@@ -559,6 +614,20 @@ function EasterEggSprite($easterEggValue)
  }
 
   return $easterEggSprite;
+}
+
+//Generating gender icons function
+function GenderIcons($genderInformation,$pkmnname)
+{
+ if ($genderInformation != "")
+ {
+  echo '
+  <img class="genderIcons" id="genderFemale" src="Photos/R_F.png" />
+  <img class="genderIcons" id="genderMale" src="Photos/R_M.png" />
+  <br/>
+  ';
+  GenderSpriteChange($pkmnname);
+ }
 }
 
 /*----Functions End----*/
@@ -671,7 +740,7 @@ if (!isset($PokemonValueCombined))
  {
   //Printing out all the pokemon with gender differences
   echo '<div id="poketype"><h1>Pokemon with gender differences</h1>';
-  SeperatePokemon($pokemonList,0);
+  SeperatePokemon($pokemonList,1);
   echo '</div>';
  }
  else
@@ -686,61 +755,70 @@ else
 {
   if (($handle = fopen("PokemonTyping.csv", "r")) !== FALSE)
   {
-   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+   {
 
-      if(!isset($pokeDexLink))
+    if(!isset($pokeDexLink))
+    {
+    $pokeDexLink = "";
+    }
+
+    if ($data[0] == $PokemonValueCombined)
+    {
+     //Displaying the first row
+     echo '
+     <div class="container">
+
+     <div id="poketype">
+     <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>';
+     //Setting the Pokemon Type to be displayed on page
+     if (isset($mega) && $mega!="")
+     {
+      $megaStonePieces = explode("|",$megastone);
+      $megaPieces = explode("|",$mega);
+      $counter = 0;
+      foreach ($megaStonePieces as $value)
       {
-      $pokeDexLink = "";
-      }
-
-      if ($data[0] == $PokemonValueCombined)
-      {
-
-       echo '
-       <div class="container">
-
-       <div id="poketype">
-       <p class="font-weight-bold" id="poketype">'. $pokemonDesc . $PokemonValue1 . " " .$PokemonValue2 . ' Type</p>';
-       //Setting the Pokemon Type to be displayed on page
-       if (isset($mega) && $mega!="")
+       $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+       $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
+       if (count($megaWithoutSpaces) < 3)
        {
-        $megaStonePieces = explode("|",$megastone);
-        $megaPieces = explode("|",$mega);
-        $counter = 0;
-        foreach ($megaStonePieces as $value)
-        {
-         $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
-         $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
-         if (count($megaWithoutSpaces) < 3)
-         {
-          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].$highDataOptGET.'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
-         }
-         else
-         {
-          echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].$highDataOptGET.'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
-         }
-         $counter++;
-        }
-       echo '<br/>';
-       echo '<p>Gender Goes here</p>';
-       }
-       echo $pokeDexLink . '<br/>';
-       if($pokemonNumber > 1)
-       {
-       echo '
-       <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber-1) .$highDataOptGET.'"><i class="fa fa-arrow-circle-left" style="font-size:50px" aria-hidden="true"></i></a>';
-       }
-       //last pokemon arrow. Too tired to do it programmatically, couldn't think of solution, hard coded to melmetal.
-       if ($pokemonNumber != 809)
-       {
-       echo $pokemonImage .'
-       <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .$highDataOptGET.'"><i class="fa fa-arrow-circle-right" style="font-size:50px" aria-hidden="true"></i></a><br/>';
+        echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].$highDataOptGET.'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
        }
        else
        {
-        echo $pokemonImage .'
-        <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .$highDataOptGET.'"></i></a><br/>';
+        echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].$highDataOptGET.'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
        }
+       $counter++;
+      }
+
+      echo '<br/>';
+     }
+
+     //Setting the Team Rocket / Jessie and James gender icons to appear when the 3D file exists and user has set 3D option
+     if ($_GET['HighDataOpt'] == "on" and file_exists("Sprites/".$specificPokemonName.".gif"))
+     {
+      GenderIcons($genderNotes,$specificPokemonName);
+     }
+
+     echo $pokeDexLink . '<br/>';
+     if($pokemonNumber > 1)
+     {
+      echo '
+      <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber-1) .$highDataOptGET.'"><i class="fa fa-arrow-circle-left" style="font-size:50px" aria-hidden="true"></i></a>';
+     }
+
+    //last pokemon arrow. Too tired to do it programmatically, couldn't think of solution, hard coded to melmetal.
+    if ($pokemonNumber != 809)
+    {
+     echo $pokemonImage .'
+     <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .$highDataOptGET.'"><i class="fa fa-arrow-circle-right" style="font-size:50px" aria-hidden="true"></i></a><br/>';
+    }
+    else
+    {
+     echo $pokemonImage .'
+     <a href="?Type1=Bug&Type2=&search='. ($pokemonNumber+1) .$highDataOptGET.'"></i></a><br/>';
+    }
 
     //Shiny Animation
     echo '<img id="shiny" style="display:none;" src="Photos/shiny.gif" /> ';
@@ -762,117 +840,117 @@ else
     $pieces = explode(">",$pokemonEvolutionLine);
     echo '<br/>
     <div class="card">';
-        if($pokemonSpecies != "")
-        {
-        echo '
-        <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>';
-        }
-        else
-        {
-        echo '
-        <div class="card-header">Pokémon Details</div>';
-        }
-        echo '
-        <ul class="list-group list-group-flush">
-          <!--Setting the Pokedex Entries-->
-          <li class="list-group-item">'.isEmptyOutput($pokemonPokedexEntry,$pokemonPokedexEntry).isEmptyOutput($professorLotusNotes,$lotusString).isEmptyOutput($genderNotes,$GenderString).'</li>';
-          if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
-          {
-           echo '
-           <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
-           foreach ($pieces as $value)
+    if($pokemonSpecies != "")
+    {
+    echo '
+    <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>';
+    }
+    else
+    {
+    echo '
+    <div class="card-header">Pokémon Details</div>';
+    }
+    echo '
+    <ul class="list-group list-group-flush">
+      <!--Setting the Pokedex Entries-->
+      <li class="list-group-item">'.isEmptyOutput($pokemonPokedexEntry,$pokemonPokedexEntry).isEmptyOutput($professorLotusNotes,$lotusString).isEmptyOutput($genderNotes,$GenderString).'</li>';
+      if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
+      {
+       echo '
+       <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
+       foreach ($pieces as $value)
+       {
+           $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
+           if($value != "-")
            {
-               $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
-               if($value != "-")
-               {
-                   if ($value === end($pieces)) { //last
-                       if (strpos($value, '|') !== false)
-                       {
-                           $value  = str_replace("|","",$value);
-                           $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                           echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                       }
-                       else
-                       {
-                           echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                       }
-
+               if ($value === end($pieces)) { //last
+                   if (strpos($value, '|') !== false)
+                   {
+                       $value  = str_replace("|","",$value);
+                       $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
                    }
                    else
                    {
-                       if (strpos($value, '|') !== false)
-                       {
-                           $value  = str_replace("|","",$value);
-                           $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                           echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                       }
-                       else
-                       {
-                           echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                       }
+                       echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                   }
+
+               }
+               else
+               {
+                   if (strpos($value, '|') !== false)
+                   {
+                       $value  = str_replace("|","",$value);
+                       $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
+                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                   }
+                   else
+                   {
+                       echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
                    }
                }
-               else
-               {
-                   echo '<li><p>This Pokemon has no evolution</p></li>';
-               }
-            }
-            echo '</ul>
-            </li>';
            }
+           else
+           {
+               echo '<li><p>This Pokemon has no evolution</p></li>';
+           }
+        }
+        echo '</ul>
+        </li>';
+       }
 
-            if (count($pokemonNumberNames)>1)
+        if (count($pokemonNumberNames)>1)
+        {
+         echo '<li class="list-group-item forme"><ul><b>Different Forms</b><br/><br/>';
+         $counter = 0;
+         foreach ($pokemonNumberNames as $pokenames) {
+         $pokenamesWithoutSpaces = str_replace(" ","-",$pokenames);
+          if(isset($mega) and $mega != "")
+          {
+           $megaArr = explode("-",$mega);
+           $pokenamesArr = explode(" ",$pokenames);
+           if(strtolower($megaArr[1])=="mega" and strtolower($pokenamesArr[0])=="mega")
+           {
+            $megaArrXYVariants = explode("|",$mega);
+            if(count($megaArrXYVariants)<2)
             {
-             echo '<li class="list-group-item forme"><ul><b>Different Forms</b><br/><br/>';
-             $counter = 0;
-             foreach ($pokemonNumberNames as $pokenames) {
-             $pokenamesWithoutSpaces = str_replace(" ","-",$pokenames);
-              if(isset($mega) and $mega != "")
-              {
-               $megaArr = explode("-",$mega);
-               $pokenamesArr = explode(" ",$pokenames);
-               if(strtolower($megaArr[1])=="mega" and strtolower($pokenamesArr[0])=="mega")
-               {
-                $megaArrXYVariants = explode("|",$mega);
-                if(count($megaArrXYVariants)<2)
-                {
-                 echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
-                }
-                else
-                {
-                 $pokenamesArr = explode(" ",$pokenames);
-                 echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($pokenamesArr[1]).'-'.strtolower($pokenamesArr[2]).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
-                }
-               }
-               else
-               {
-                echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenames).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
-               }
-              }
-              else
-              {
-               if($pokemonNumberLinks[$counter] != "")
-               {
-                $pokemonNumberLinksArr = explode("-",$pokemonNumberLinks[$counter]);
-                //clause for castform as it's in PNG form for some fucking reason
-                if($pokemonNumberLinksArr[0] != "castform")
-                {
-                 echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokemonNumberLinks[$counter]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
-                }
-                else
-                {
-                 echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/vector/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
-                }
-               }
-               else
-               {
-                echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
-               }
-              }
-              $counter++;
-             }
-             echo '</ul></li>';
+             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
             }
+            else
+            {
+             $pokenamesArr = explode(" ",$pokenames);
+             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($pokenamesArr[1]).'-'.strtolower($pokenamesArr[2]).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+            }
+           }
+           else
+           {
+            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenames).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+           }
+          }
+          else
+          {
+           if($pokemonNumberLinks[$counter] != "")
+           {
+            $pokemonNumberLinksArr = explode("-",$pokemonNumberLinks[$counter]);
+            //clause for castform as it's in PNG form for some fucking reason
+            if($pokemonNumberLinksArr[0] != "castform")
+            {
+             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokemonNumberLinks[$counter]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+            }
+            else
+            {
+             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/vector/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+            }
+           }
+           else
+           {
+            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+           }
+          }
+          $counter++;
+         }
+         echo '</ul></li>';
+        }
 
         echo '
         </ul>
