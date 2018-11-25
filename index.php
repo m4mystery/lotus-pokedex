@@ -915,7 +915,7 @@ else
                    }
                    else
                    {
-                       echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                       echo '<a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
                    }
                }
            }
