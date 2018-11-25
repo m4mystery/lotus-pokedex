@@ -897,11 +897,11 @@ else
                    {
                        $value  = str_replace("|","",$value);
                        $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
                    }
                    else
                    {
-                       echo '<a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
+                       echo '<a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
                    }
 
                }
@@ -911,7 +911,7 @@ else
                    {
                        $value  = str_replace("|","",$value);
                        $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.strtolower($valueWithoutSpaces).$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
+                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
                    }
                    else
                    {
