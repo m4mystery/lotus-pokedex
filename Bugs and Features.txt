@@ -11,11 +11,12 @@ pidgey mega evolution lol it's on ratatta
 Staryu and Starmie are genderless. They are from space.
 
 Bug List:
-Nidoran F and M are broken 3D Models
-Ponyta evolution line is spelt Ponita
-Magmar evolution line does not include magmoarter
-Electabuzz evolution line does not include electavire
-When you click on pokemon through gender it doesn't link 3D settings ....... Fuck.
+Unown - 3D sprites
+Mr Mime and Mime Jr evolution line links are broken
+
+
+
+
 
 Feature add:
 Gender button that switches from male and female sprites

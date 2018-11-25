@@ -84,7 +84,7 @@ Separate evolutionary lines"
 74,Geodude,Rock,Ground,300,40,80,100,30,30,20,1,FALSE,,,,,Geodude>Graveler>Golem,Rock,"The longer a Geodude lives, the more its edges are chipped and worn away, making it more rounded in appearance. However, this Pokémon’s heart will remain hard, craggy, and rough always.","Geodude is a portmanteau of Geo (a prefix for things linked to the earth), Geode (a type of rock crystal, a link further expanded on with it's alolan form), and dude. Geodude was the very first Rock Pokémon in the Pokedex.",
 75,Graveler,Rock,Ground,390,55,95,115,45,45,35,1,FALSE,,,,,Geodude>Graveler>Golem,Rock,"Rocks are Graveler’s favorite food. This Pokémon will climb a mountain from the base to the summit, crunchingly feasting on rocks all the while. Upon reaching the peak, it rolls back down to the bottom.","Graveler's Japanese name is ゴローン (Goron), and avid Legend of Zelda fans would find that the rock species share the same name. This is because this is a play on words, ゴロゴローン (Goro Goron) is the onomatopoeia of rocks falling, a trait both of them share.<br/> In the original Red and Blue version of the game, the sprite incorrectly had 4 limbs visible instead of 6. This was fixed in the Yellow version.",
 76,Golem,Rock,Ground,495,80,120,130,55,65,45,1,FALSE,,,,,Geodude>Graveler>Golem,Megaton,"Golem live up on mountains. If there is a large earthquake, these Pokémon will come rolling down off the mountains en masse to the foothills below. To prevent them from rolling into the homes of people downhill, grooves have been dug into the sides of mountains to serve as guideways for diverting this Pokémon’s course. Once a year, this Pokémon molts, and its shed shell returns to the soil. This process creates enriched soil, so farmers collect the shells.","Golem is designed like a turtle, with the cracks on its shell to be a reflection of the earth's techtonic plates.",
-77,Ponyta,Fire,,410,50,85,55,65,65,90,1,FALSE,,,,,Ponita>Rapidash,Fire Horse,Ponyta is very weak at birth. It can barely stand up. This Pokémon becomes stronger by stumbling and falling to keep up with its parent.,"Ponyta's evolution line based on mythical steeds: From greek mythology, Helois' steeds who helped full the sun. From Norse Mythology, Skinfaxi, the horse of that Dagr (day) into the sky with it's shining light. From Hindu mythology, Ashvins, two twin sons of the sun god, often referred to as 'Horsemen'.<br/>Ponyta's Shiny form has a blue mane, suggesting that it has more efficient combustion, and therefore burns hotter. Despite this, Ponyta have the ability to control who gets burned by this flame.",
+77,Ponyta,Fire,,410,50,85,55,65,65,90,1,FALSE,,,,,Ponyta>Rapidash,Fire Horse,Ponyta is very weak at birth. It can barely stand up. This Pokémon becomes stronger by stumbling and falling to keep up with its parent.,"Ponyta's evolution line based on mythical steeds: From greek mythology, Helois' steeds who helped full the sun. From Norse Mythology, Skinfaxi, the horse of that Dagr (day) into the sky with it's shining light. From Hindu mythology, Ashvins, two twin sons of the sun god, often referred to as 'Horsemen'.<br/>Ponyta's Shiny form has a blue mane, suggesting that it has more efficient combustion, and therefore burns hotter. Despite this, Ponyta have the ability to control who gets burned by this flame.",
 78,Rapidash,Fire,,500,65,100,70,80,80,105,1,FALSE,,,,,Ponita>Rapidash,Fire Horse,"Rapidash usually can be seen casually cantering in the fields and plains. However, when this Pokémon turns serious, its fiery manes flare and blaze as it gallops its way up to 150 mph.",Rapidash are based off Unicorns as well as being an extention of the mythical creatures that inspired Ponyta. Rapidash' japanese name is simply ギャロップ (Gyaropu) which can be translated to Gallop.,
 79,Slowpoke,Water,Psychic,315,90,65,65,40,40,15,1,FALSE,,,Slowbro-mega,Slowbronite,Slowpoke>Slowbro>Slowking,Dopey,"A sweet sap leaks from its tail's tip. Although not nutritious, the tail is pleasant to chew on. Its long tail often breaks off. It doesn’t really feel any pain, though, and the tail grows back, so Slowpoke isn’t particularly bothered.","Slowpoke is the only Pokemon that has the same weight as it's Pokedex entry number (when rounded). Slowpoke tails grow back, so they are constantly being targetted for cooking.",
 80,Slowbro,Water,Psychic,490,95,75,110,100,80,30,1,FALSE,,,Slowbro-mega,Slowbronite,Slowpoke>Slowbro>Slowking,Hermit Crab,"Slowbro’s tail has a Shellder firmly attached with a bite. As a result, the tail can’t be used for fishing anymore. This causes Slowbro to grudgingly swim and catch prey instead. It turns back into Slowpoke if its tail, along with Shellder, breaks off.",The relationship that Slowpoke has with Shellder is parasitic. The Shellder on it's tail is constantly pumping poison into slowpoke to 'motivate' it to do what it likes.,
@@ -135,8 +135,8 @@ Separate evolutionary lines"
 122,Mr. Mime,Psychic,Fairy,460,40,45,65,100,120,90,1,FALSE,mr-mime,mr-mime,,,Mime jr>Mr Mime,,,,
 123,Scyther,Bug,Flying,500,70,110,80,55,80,105,1,FALSE,,,,,Scyther>Scizor,,,,Female's abdomen is larger
 124,Jynx,Ice,Psychic,455,65,50,35,115,95,95,1,FALSE,,,,,Smoochum>Jynx,,,,
-125,Electabuzz,Electric,,490,65,83,57,95,85,105,1,FALSE,,,,,Elekid>Electabuzz,,,,
-126,Magmar,Fire,,495,65,95,57,100,85,93,1,FALSE,,,,,Magby>Magmar,,,,
+125,Electabuzz,Electric,,490,65,83,57,95,85,105,1,FALSE,,,,,Elekid>Electabuzz>Electivire,,,,
+126,Magmar,Fire,,495,65,95,57,100,85,93,1,FALSE,,,,,Magby>Magmar>Magmorter,,,,
 127,Pinsir,Bug,,500,65,125,100,55,70,85,1,FALSE,,,Pinsir-mega,Pinsirite,-,,,,
 127,Mega Pinsir,Bug,Flying,600,65,155,120,65,90,105,1,FALSE,,,Pinsir-mega,Pinsirite,-,,,,
 128,Tauros,Normal,,490,75,100,95,40,70,110,1,FALSE,,,,,-,,,,
@@ -259,8 +259,8 @@ Separate evolutionary lines"
 236,Tyrogue,Fighting,,210,35,35,35,35,35,35,2,FALSE,,,,,Tyrogue>|Hitmonlee>|Hitmonchan>|Hitmontop,,,,
 237,Hitmontop,Fighting,,455,50,95,95,35,110,70,2,FALSE,,,,,,,,,
 238,Smoochum,Ice,Psychic,305,45,30,15,85,65,65,2,FALSE,,,,,,,,,
-239,Elekid,Electric,,360,45,63,37,65,55,95,2,FALSE,,,,,,,,,
-240,Magby,Fire,,365,45,75,37,70,55,83,2,FALSE,,,,,,,,,
+239,Elekid,Electric,,360,45,63,37,65,55,95,2,FALSE,,,,,Elekid>Electabuzz>Electivire,,,,
+240,Magby,Fire,,365,45,75,37,70,55,83,2,FALSE,,,,,Magby>Magmar>Magmorter,,,,
 241,Miltank,Normal,,490,95,80,105,40,70,100,2,FALSE,,,,,,,,,
 242,Blissey,Normal,,540,255,10,10,75,135,55,2,FALSE,,,,,,,,,
 243,Raikou,Electric,,580,90,85,75,115,100,115,2,TRUE,,,,,,,,,
@@ -472,9 +472,12 @@ Separate evolutionary lines"
 418,Buizel,Water,,330,55,65,35,60,30,85,4,FALSE,,,,,,,,,Male has two white spots on his back while female has one
 419,Floatzel,Water,,495,85,105,55,85,50,115,4,FALSE,,,,,,,,,Male has two white bumps on his back while female has one
 420,Cherubi,Grass,,275,45,35,45,62,53,35,4,FALSE,,,,,,,,,
-421,Cherrim,Grass,,450,70,60,70,87,78,85,4,FALSE,,,,,,,,,
-422,Shellos,Water,,325,76,48,48,57,62,34,4,FALSE,,,,,,,,,
-423,Gastrodon,Water,Ground,475,111,83,68,92,82,39,4,FALSE,,,,,,,,,
+421,Cherrim Overcast,Grass,,450,70,60,70,87,78,85,4,FALSE,cherrim,cherrim,,,,,,,
+421,Cherrim Sunny,Grass,,450,70,60,70,87,78,85,4,FALSE,cherrim,cherrim-sunny,,,,,,,
+422,Shellos East,Water,,325,76,48,48,57,62,34,4,FALSE,shellos,shellos-east,,,,,,,
+422,Shellos West,Water,,325,76,48,48,57,62,34,4,FALSE,shellos,shellos-west,,,,,,,
+423,Gastrodon East,Water,Ground,475,111,83,68,92,82,39,4,FALSE,gastrodon,gastrodon-east,,,,,,,
+423,Gastrodon West,Water,Ground,475,111,83,68,92,82,39,4,FALSE,gastrodon,gastrodon-west,,,,,,,
 424,Ambipom,Normal,,482,75,100,66,60,66,115,4,FALSE,,,,,,,,,Male has shorter hair on his head
 425,Drifloon,Ghost,Flying,348,90,50,34,60,44,70,4,FALSE,,,,,,,,,
 426,Drifblim,Ghost,Flying,498,150,80,44,90,54,80,4,FALSE,,,Lopunny-mega,Lopunnite,,,,,
@@ -521,8 +524,8 @@ Separate evolutionary lines"
 463,Lickilicky,Normal,,515,110,85,95,80,95,50,4,FALSE,,,,,Lickitung>Lickilicky,,,,
 464,Rhyperior,Ground,Rock,535,115,140,130,55,55,40,4,FALSE,,,,,,,,,Female has smaller upper horn
 465,Tangrowth,Grass,,535,100,100,125,110,50,50,4,FALSE,,,,,,,,,Female's fingers are more magenta than blue
-466,Electivire,Electric,,540,75,123,67,95,85,95,4,FALSE,,,,,,,,,
-467,Magmortar,Fire,,540,75,95,67,125,95,83,4,FALSE,,,,,,,,,
+466,Electivire,Electric,,540,75,123,67,95,85,95,4,FALSE,,,,,Elekid>Electabuzz>Electivire,,,,
+467,Magmortar,Fire,,540,75,95,67,125,95,83,4,FALSE,,,,,Magby>Magmar>Magmorter,,,,
 468,Togekiss,Fairy,Flying,545,85,50,95,120,115,80,4,FALSE,,,,,,,,,
 469,Yanmega,Bug,Flying,515,86,76,86,116,56,95,4,FALSE,,,,,,,,,
 470,Leafeon,Grass,,525,65,110,130,60,65,95,4,FALSE,,,,,,,,,

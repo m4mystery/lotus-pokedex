@@ -300,6 +300,8 @@ function ShinyCheck($regular,$shiny)
        function SettingShiny(genderParameter)
        {
 
+        $(".whodat").toggleClass("active");
+
         //setting the active class so that it can switch
          if($(".whodat").hasClass("active"))
          {
@@ -319,7 +321,7 @@ function ShinyCheck($regular,$shiny)
             x.style.display = "none";
          }
 
-         $(".whodat").toggleClass("active");
+
        }
 
        $(".whodat").click(function ()
@@ -351,17 +353,18 @@ function GenderSpriteChange($pokemon)
      {
        $("#genderMale").click(function ()
        {
-        $(".whodat").addClass("active");
         $(".whodat").removeClass("female");
+        $(".whodat").removeClass("active");
        	$(".whodat").attr("src","Sprites/'.$pokemon.'.gif");
        	//Hiding the shiny loading sprite
        	document.getElementById("shiny").style.display = "none";
        });
        $("#genderFemale").click(function ()
        {
-        $(".whodat").addClass("active");
+
         $(".whodat").addClass("female");
         $(".whodat").removeClass("male");
+        $(".whodat").removeClass("active");
        	$(".whodat").attr("src","Sprites/'.$pokemon.'_Female.gif");
        	//Hiding the shiny loading sprite
        	document.getElementById("shiny").style.display = "none";
@@ -512,6 +515,7 @@ function SetPokemonURLs($data,$easterEgg)
   else
   {
    $specificPokemonLinkArr = explode("-",$data[14]);
+
    //Setting the link
    $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
 
@@ -537,22 +541,47 @@ function SetPokemonURLs($data,$easterEgg)
    //Capturing everything else that has a specific link
    else
    {
-    //Changing items with the specific image link to 3D sprites
-    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif') and isset($HighDataOption) )
-    {
-     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
 
-     if (file_exists($shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+    if($specificPokemonLinkArr[1] == "")
+    {
+     //Changing items with the specific image link to 3D sprites
+     if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'.gif') and isset($HighDataOption) )
      {
-      ShinyCheck($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])), $shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])));
+      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'.gif">';
+
+      if (file_exists($shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'.gif'))
+      {
+       ShinyCheck($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])), $shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])));
+      }
+
+     }
+     //Everything else that isn't a 3D sprite redirected to pokemonDB
+     else
+     {
+      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
      }
 
     }
-    //Everything else that isn't a 3D sprite redirected to pokemonDB
     else
     {
-     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+     //Changing items with the specific image link to 3D sprites
+     if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif') and isset($HighDataOption) )
+     {
+      $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
+
+      if (file_exists($shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
+      {
+       ShinyCheck($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])), $shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])));
+      }
+
+     }
+     //Everything else that isn't a 3D sprite redirected to pokemonDB
+     else
+     {
+      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+     }
     }
+
    }
   }
  }
@@ -619,7 +648,7 @@ function EasterEggSprite($easterEggValue)
 //Generating gender icons function
 function GenderIcons($genderInformation,$pkmnname)
 {
- if ($genderInformation != "")
+ if($genderInformation != "")
  {
   echo '
   <img class="genderIcons" id="genderFemale" src="Photos/R_F.png" />
