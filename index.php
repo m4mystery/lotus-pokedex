@@ -1030,7 +1030,8 @@ else
        //Prints out all the pokemon in a specific list and splits them by generation
        SeperatePokemon($pokemonList,1);
 
-       echo '</p></div></div>
+       echo '</p>
+       </div></div>
        <div class="container">
        <div class="card-group">';
 
@@ -1134,6 +1135,7 @@ else
 }
 }
 
+include_once("view-bottom.php");
 
 //____Autocomplete Javascript Call_____\\
 include("autocomplete.php");
@@ -1145,6 +1147,3 @@ if($pokemonSearch != "" and $PokemonValueCombined != "")
 include("highchart.php");
 }
 ?>
-
-</body>
-</html>
