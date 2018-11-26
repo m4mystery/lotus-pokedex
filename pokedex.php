@@ -36,11 +36,11 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
     else
     {
       echo '
-      <td><a href=index.php?Type1=Bug&Type2=&search='.$data[1].'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';"></a></td>';
+      <td><a href=index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';"></a></td>';
     }
     echo '
-    <td><a href=index.php?Type1=Bug&Type2=&search='.$data[1].'&HighDataOpt=on">'.$data[0].'</a></td>
-    <td><a href=index.php?Type1=Bug&Type2=&search='.$data[1].'&HighDataOpt=on">'.$data[1].'</a>
+    <td><a href=index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on">'.$data[0].'</a></td>
+    <td><a href=index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on">'.$data[1].'</a>
     <br/>
     <div class="container">
       <div class="row">
