@@ -221,75 +221,75 @@ margin-top:0.5%;
  margin-bottom:4px;
 }
 
-.card.nor
+.nor
 {
 background:rgb(182, 182, 168);
 }
-.card.fir
+.fir
 {
 background:rgb(255, 96, 67);
 }
-.card.wat
+.wat
 {
 background:rgb(82, 168, 255);
 }
-.card.ele
+.ele
 {
 background:rgb(255, 211, 82);
 }
- .card.gra
+.gra
 {
 background:#89D26B;
 }
-.card.ice
+.ice
 {
 background:#7DD3FF;
 }
-.card.fig
+.fig
 {
 background:#BB5544;
 }
-.card.poi
+.poi
 {
 background:#B469A5;
 }
-.card.gro
+.gro
 {
 background:#E2C56E;
 }
-.card.fly
+.fly
 {
 background:#9AA8FF;
 }
-.card.psy
+.psy
 {
 background:#FF6EA8;
 }
-.card.bug
+.bug
 {
 background:#B4C33C;
 }
- .card.roc
+ .roc
 {
 background:#C5B67D;
 }
-.card.gho
+.gho
 {
 background:#7D7DC5;
 }
-.card.dra
+.dra
 {
 background:#8B7DF0;
 }
-.card.dar
+.dar
 {
 background:#8B6E60;
 }
-.card.ste
+.ste
 {
 background:#AAAABB;
 }
-.card.fai
+.fai
 {
 background:#F0A6F0;
 }
@@ -315,4 +315,39 @@ margin-bottom:-1px;
 .genderIcons
 {
  width:50px;
+}
+
+/*Footer*/
+.footer.span
+{
+ margin-left:5%;
+}
+
+.span a
+{
+ padding-right: 20px;
+ border-right: 1px solid #fdfadc;
+ display: inline-block;
+}
+
+.footerIcon
+{
+ text-align:center;
+}
+
+.footerCard
+{
+ background-color: transparent;
+ border:none;
+}
+
+/*Full Pokedex*/
+.tinySprite
+{
+  max-height:30px;
+}
+
+.pokedexsearch
+{
+  margin-top:2%;
 }
