@@ -10,8 +10,8 @@ include_once('view-top.php');
 <table id="example" class="table table-striped table-bordered table-sm" cellspacing="0">
     <tr>
         <th scope="col">Pokemon</th>
-        <th scope="col" onclick="sortTable(0)">#</th>
-        <th scope="col" onclick="sortTable(1)">Name</th>
+        <th scope="col" onclick="sortTable(1)">#</th>
+        <th scope="col" onclick="sortTable(2)">Name</th>
     </tr>
 
 <?php
@@ -31,16 +31,17 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
     if($data[14]== "")
     {
       echo '
-      <td><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></td>';
+      <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></a></td>';
     }
     else
     {
       echo '
-      <td><a href=index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';"></a></td>';
+      <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';"></a></td>';
     }
+    //Sprintf is used to make single digit number into, in this case triple digits
     echo '
-    <td><a href=index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on">'.$data[0].'</a></td>
-    <td><a href=index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on">'.$data[1].'</a>
+    <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on">'.sprintf('%03d', $data[0]).'</a></td>
+    <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on">'.$data[1].'</a>
     <br/>
     <div class="container">
       <div class="row">
