@@ -345,6 +345,7 @@ function ShinyCheck($regular,$shiny)
 
 //Function that toggles the image from the male and female variant.
 //Uses Team Rocket as the gender identifiers.
+//https://jsfiddle.net/dz8t4tta/1/
 function GenderSpriteChange($pokemon)
 {
      echo '
@@ -659,8 +660,40 @@ function GenderIcons($genderInformation,$pkmnname)
  }
 }
 
+//Function to print out the stage 1 or 2 evolutuons
+function evos($pokenames, $evoConditions,$stage)
+{
+
+     $counter = 0;
+     echo '<h4>Stage '.$stage.'</h4>';
+     foreach ($pokenames as $PkmNamevalue)
+     {
+       $getThemAlolans = explode(' ',$PkmNamevalue);
+       echo '
+       <a href="?Type1=Normal&Type2=&search='.$PkmNamevalue.'&HighDataOpt=on"><div class="panel panel-default rounded border border-secondary evo">
+       <div class="panel-body ">'
+       .$PkmNamevalue;
+       if($getThemAlolans[0] != "Alolan" )
+       {
+        echo
+        '<img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($PkmNamevalue).'.png">
+        <hr>'.$evoConditions[$counter].'</div></div></a>';
+       }
+       else
+       {
+        echo
+        '<img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($getThemAlolans[1].'-'.$getThemAlolans[0]).'.png">
+        <hr>'.$evoConditions[$counter].'</div></div></a>';
+       }
+       $counter++;
+     }
+
+}
+
+
 /*----Functions End----*/
 
+/*----Setting Values from CSV----*/
 //When the Pokemon is searched by number
 if(is_numeric($pokemonSearch))
 {
@@ -759,6 +792,38 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
 
  fclose($handle);
 }
+
+/*----Beginning of setting evolution line values----*/
+if (($handle = fopen("evolutions.csv", "r")) !== FALSE)
+{
+  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+  {
+    if($specificPokemonName != "")
+    {
+     $pos = strpos($data[0], $specificPokemonName);
+
+     if($pos !== false and $data[3] != "")
+     {
+          $baseEvo = $data[1];
+          $stage1EvoConditions = explode("|",$data[2]);
+          $stage1Pokenames = explode("|",$data[3]);
+          if($data[4] != "")
+          {
+               $stage2EvoConditions = explode("|",$data[4]);
+               $stage2Pokenames = explode("|",$data[5]);
+          }
+
+          break;
+     }
+
+    }
+  }
+
+}
+fclose($handle);
+/*----End of setting evolution line values----*/
+
+/*----End of setting values from CSV----*/
 
 //This is to chech if the correct pokemon was identified, if not set, it will show who is that pokemon, unless specific command overrides
 if (!isset($PokemonValueCombined))
@@ -872,65 +937,61 @@ else
     if($pokemonSpecies != "")
     {
     echo '
-    <div class="card-header">The '.$pokemonSpecies.' Pokémon</div>';
+    <div class="card-header"><h3>The '.$pokemonSpecies.' Pokémon<h3></div>';
     }
     else
     {
     echo '
-    <div class="card-header">Pokémon Details</div>';
+    <div class="card-header"><h3>Pokémon Details</h3></div>';
     }
     echo '
     <ul class="list-group list-group-flush">
       <!--Setting the Pokedex Entries-->
       <li class="list-group-item">'.isEmptyOutput($pokemonPokedexEntry,$pokemonPokedexEntry).isEmptyOutput($professorLotusNotes,$lotusString).isEmptyOutput($genderNotes,$GenderString).'</li>';
-      if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="")
+      if($stage1Pokenames != "")
       {
-       echo '
-       <li class="list-group-item evolve"><ul><b>Evolution Line</b><br/><br/>';
-       foreach ($pieces as $value)
-       {
-           $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
-           if($value != "-")
+      echo '<li class="list-group-item evolve"><ul><h3>Evolution Line</h3>';
+       /*----Beginning of printing evolution line ----*/
+      if($stage1EvoConditions != "")
+      {
+           $getThemAlolans = explode(' ',$baseEvo);
+           $counter = 0;
+           echo '<h4>Base</h4>';
+           echo '
+           <a href="?Type1=Normal&Type2=&search='.$baseEvo.'&HighDataOpt=on">
+           <div class="panel panel-default rounded border border-secondary evo">
+           <div class="panel-body ">';
+           if ($getThemAlolans[0] != "Alolan")
            {
-               if ($value === end($pieces)) { //last
-                   if (strpos($value, '|') !== false)
-                   {
-                       $value  = str_replace("|","",$value);
-                       $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                   }
-                   else
-                   {
-                       echo '<a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><li><p><img class="end" src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                   }
-
-               }
-               else
-               {
-                   if (strpos($value, '|') !== false)
-                   {
-                       $value  = str_replace("|","",$value);
-                       $valueWithoutSpaces = str_replace("|","",$valueWithoutSpaces);
-                       echo '<li class="branchingEvolution"><a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><p><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></a></li>';
-                   }
-                   else
-                   {
-                       echo '<a href="?Type1=Normal&Type2=&search='.$value.$highDataOptGET.'"><li><p class="notend"><img src="https://img.pokemondb.net/artwork/'.strtolower($valueWithoutSpaces).'.jpg" height="42"><br/>'.$value.'</p></li></a>';
-                   }
-               }
+            echo
+            $baseEvo.
+            '<img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($baseEvo).'.png">
+            </div></div></a>';
            }
            else
            {
-               echo '<li><p>This Pokemon has no evolution</p></li>';
+            echo
+            $baseEvo.
+            '<img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($getThemAlolans[1]."-".$getThemAlolans[0]).'.png">
+            </div></div>
+            </a>';
            }
-        }
-        echo '</ul>
-        </li>';
-       }
+
+           evos($stage1Pokenames, $stage1EvoConditions,1);
+      }
+
+
+      if($stage2EvoConditions != "")
+      {
+           evos($stage2Pokenames, $stage2EvoConditions,2);
+      }
+      echo '</ul></li>';
+      /*----End of setting evolution line values----*/
+      }
 
         if (count($pokemonNumberNames)>1)
         {
-         echo '<li class="list-group-item forme"><ul><b>Different Forms</b><br/><br/>';
+         echo '<li class="list-group-item forme"><ul><h3>Different Forms</h3>';
          $counter = 0;
          foreach ($pokemonNumberNames as $pokenames) {
          $pokenamesWithoutSpaces = str_replace(" ","-",$pokenames);

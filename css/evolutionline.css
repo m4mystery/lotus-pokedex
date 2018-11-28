@@ -57,3 +57,13 @@ ul
 {
  display: block;
 }
+
+/*Evolution version 2*/
+.evo
+{
+    display: inline-block;
+    padding: 1%;
+    font-size: small;
+    border:0.1px ;
+    margin:1%;
+}
