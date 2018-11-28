@@ -918,7 +918,7 @@ else
     echo '<img id="shiny" style="display:none;" src="Photos/shiny.gif" /> ';
 
     //Setting the evolution line items
-    if(isset($pokemonEvolutionLine) and $pokemonEvolutionLine !="" and isset($pokemonSearch) and $pokemonSearch != "" or count($pokemonNumberNames)>1 or $genderNotes != "" or $professorLotusNotes != "")
+    if($stage1Pokenames !="" and isset($pokemonSearch) and $pokemonSearch != "" or count($pokemonNumberNames)>1 or $genderNotes != "" or $professorLotusNotes != "")
     {
 
     //Line Breaks for the Pokedex
