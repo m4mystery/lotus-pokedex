@@ -461,7 +461,7 @@ function SetPokemonURLs($setPokemonURLsData,$easterEgg)
     //If the 3D sprite does not exist then load from PokemonDB
     else
     {
-     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'.jpg">';
+     $pokemonImage = '<img class="whodat" src="Sprites/sugimori/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'.png">';
     }
    }
    //This is the condition for mega charizard x / mewtwo y and the like
@@ -484,7 +484,7 @@ function SetPokemonURLs($setPokemonURLsData,$easterEgg)
     //If the 3D sprite does not exist then load from PokemonDB
     else
     {
-     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.jpg">';
+     $pokemonImage = '<img class="whodat" src="Sprites/sugimori/'.strtolower($strArray[1]).'-'.strtolower($strArray[0]).'-'.strtolower($strArray[2]).'.png">';
     }
    }
  }
@@ -509,7 +509,7 @@ function SetPokemonURLs($setPokemonURLsData,$easterEgg)
      //Not setting this just for easter eggs, new sprites, or shiny pokemon. Value set within numeric
      if ($easterEgg == FALSE)
      {
-      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($dataWithoutSpaces).'.jpg">';
+      $pokemonImage = '<img class="whodat" src="Sprites/sugimori/'.strtolower($dataWithoutSpaces).'.png">';
      }
     }
   }
@@ -520,29 +520,8 @@ function SetPokemonURLs($setPokemonURLsData,$easterEgg)
    //Setting the link
    $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($setPokemonURLsData[13]).'" target="_blank">[PokeDex Entry]</a>';
 
-   //Capturing a castform filetype change in Pokemondb
-   if(strtolower($specificPokemonLinkArr[0]) == "castform")
-   {
-    if (file_exists($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif') and isset($HighDataOption))
-    {
-     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif">';
 
-     if (file_exists($shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])).'.gif'))
-     {
-      ShinyCheck($spriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])), $shinySpriteFileLocation.ucfirst(strtolower($specificPokemonLinkArr[0])).'_'.ucfirst(strtolower($specificPokemonLinkArr[1])));
-     }
-
-    }
-    // for some reason castform isn't a JPG in Pokemon DB hence this clause with it's alternative forms so I have to have this clause
-    else
-    {
-     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($setPokemonURLsData[14]).'.png">';
-    }
-   }
    //Capturing everything else that has a specific link
-   else
-   {
-
     if($specificPokemonLinkArr[1] == "")
     {
      //Changing items with the specific image link to 3D sprites
@@ -559,7 +538,7 @@ function SetPokemonURLs($setPokemonURLsData,$easterEgg)
      //Everything else that isn't a 3D sprite redirected to pokemonDB
      else
      {
-      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($setPokemonURLsData[14]).'.jpg">';
+      $pokemonImage = '<img class="whodat" src="Sprites/sugimori/'.strtolower($setPokemonURLsData[14]).'.png">';
      }
 
     }
@@ -579,12 +558,11 @@ function SetPokemonURLs($setPokemonURLsData,$easterEgg)
      //Everything else that isn't a 3D sprite redirected to pokemonDB
      else
      {
-      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($setPokemonURLsData[14]).'.jpg">';
+      $pokemonImage = '<img class="whodat" src="Sprites/sugimori/'.strtolower($setPokemonURLsData[14]).'.png">';
      }
     }
 
    }
-  }
  }
 
 }
@@ -1016,37 +994,28 @@ else
             $megaArrXYVariants = explode("|",$mega);
             if(count($megaArrXYVariants)<2)
             {
-             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($megaArr[0]).'-mega.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($megaArr[0]).'-mega.png" height="42"><br/>'.$pokenames.'</p></li></a>';
             }
             else
             {
              $pokenamesArr = explode(" ",$pokenames);
-             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($pokenamesArr[1]).'-'.strtolower($pokenamesArr[2]).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($pokenamesArr[1]).'-'.strtolower($pokenamesArr[2]).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
             }
            }
            else
            {
-            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenames).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenames).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenames).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
            }
           }
           else
           {
            if($pokemonNumberLinks[$counter] != "")
            {
-            $pokemonNumberLinksArr = explode("-",$pokemonNumberLinks[$counter]);
-            //clause for castform as it's in PNG form for some fucking reason
-            if($pokemonNumberLinksArr[0] != "castform")
-            {
-             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokemonNumberLinks[$counter]).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
-            }
-            else
-            {
-             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/vector/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
-            }
+             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
            }
            else
            {
-            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="https://img.pokemondb.net/artwork/'.strtolower($pokenames).'.jpg" height="42"><br/>'.$pokenames.'</p></li></a>';
+            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenames).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
            }
           }
           $counter++;
