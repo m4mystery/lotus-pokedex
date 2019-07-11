@@ -1,5 +1,5 @@
 <?php
-
+//Page to view all the pokemon in a generation on one page
 include_once('view-top.php');
 
 ?>

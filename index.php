@@ -375,7 +375,7 @@ function GenderSpriteChange($pokemon)
 }
 
 //Function that pulls information from the datafile
-function SetPokemonSpecificTyping($data)
+function SetPokemonSpecificTyping($pokemonSpecificTypingData)
 {
  //Setting Pokemon Pokemon name and numbers Globally
  global $pokemonNumber,$PokemonValue1,$PokemonValue2;
@@ -389,33 +389,33 @@ function SetPokemonSpecificTyping($data)
  global $pokemonEvolutionLine,$pokemonSpecies,$pokemonPokedexEntry,$professorLotusNotes,$genderNotes;
 
  //Setting Pokemon Pokemon name and numbers
- $pokemonNumber = $data[0];
- $PokemonValue1 = $data[2];
- $PokemonValue2 = $data[3];
+ $pokemonNumber = $pokemonSpecificTypingData[0];
+ $PokemonValue1 = $pokemonSpecificTypingData[2];
+ $PokemonValue2 = $pokemonSpecificTypingData[3];
 
  //Setting Pokemon Descriptors
  $PokemonValueCombined = strtoupper($PokemonValue1 . $PokemonValue2);
- $pokemonDesc = '#'. $data[0] . ': ' .$data[1] . ' - ';
- $specificPokemonName = $data[1];
+ $pokemonDesc = '#'. $pokemonSpecificTypingData[0] . ': ' .$pokemonSpecificTypingData[1] . ' - ';
+ $specificPokemonName = $pokemonSpecificTypingData[1];
 
  //Setting Graph Data
- $HP=$data[5];
- $Attack=$data[6];
- $Defense=$data[7];
- $SpAtk=$data[8];
- $SpDef=$data[9];
- $Speed = $data[10];
+ $HP=$pokemonSpecificTypingData[5];
+ $Attack=$pokemonSpecificTypingData[6];
+ $Defense=$pokemonSpecificTypingData[7];
+ $SpAtk=$pokemonSpecificTypingData[8];
+ $SpDef=$pokemonSpecificTypingData[9];
+ $Speed = $pokemonSpecificTypingData[10];
 
  //Setting mega Evolution
- $mega = $data[15];
- $megastone = $data[16];
+ $mega = $pokemonSpecificTypingData[15];
+ $megastone = $pokemonSpecificTypingData[16];
 
  //Setting Pokedex Entry line items
- $pokemonEvolutionLine = $data[17];
- $pokemonSpecies = $data[18];
- $pokemonPokedexEntry = $data[19];
- $professorLotusNotes = $data[20];
- $genderNotes = $data[21];
+ $pokemonEvolutionLine = $pokemonSpecificTypingData[17];
+ $pokemonSpecies = $pokemonSpecificTypingData[18];
+ $pokemonPokedexEntry = $pokemonSpecificTypingData[19];
+ $professorLotusNotes = $pokemonSpecificTypingData[20];
+ $genderNotes = $pokemonSpecificTypingData[21];
 }
 
 function SetPokemonURLs($data,$easterEgg)

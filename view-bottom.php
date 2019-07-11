@@ -2,7 +2,7 @@
 <div class="collapse" id="rotomDex">
   <div class="card card-body footerCard">
    <?php
-   $gen = 7;
+   $gen = 8;
    for ($x = 0; $x < $gen; $x++) {
     $cGen = $x + 1;
     if(basename($_SERVER['PHP_SELF']) != "pokedex.php")
