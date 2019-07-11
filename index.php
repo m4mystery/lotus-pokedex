@@ -418,7 +418,7 @@ function SetPokemonSpecificTyping($pokemonSpecificTypingData)
  $genderNotes = $pokemonSpecificTypingData[21];
 }
 
-function SetPokemonURLs($data,$easterEgg)
+function SetPokemonURLs($setPokemonURLsData,$easterEgg)
 {
  //setting pokemon link and image global
  global $pokemonImage,$pokeDexLink;
@@ -434,9 +434,9 @@ function SetPokemonURLs($data,$easterEgg)
  }
 
  //Checking Search Query for special cases such as mega evolutions etc...
- $dataWithoutFullstopsCommas = preg_replace('/[.,]/', '', $data[1]);
+ $dataWithoutFullstopsCommas = preg_replace('/[.,]/', '', $setPokemonURLsData[1]);
  $dataWithoutSpaces = preg_replace('/\s+/', '-', $dataWithoutFullstopsCommas);
- $strArray = explode(' ',$data[1]);
+ $strArray = explode(' ',$setPokemonURLsData[1]);
 
  //Check if the first word is Mega
  if ($strArray[0] == "Mega")
@@ -490,17 +490,17 @@ function SetPokemonURLs($data,$easterEgg)
  }
  else
  {
-  if($data[13] == "")
+  if($setPokemonURLsData[13] == "")
   {
     $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.$dataWithoutSpaces.'" target="_blank">[PokeDex Entry]</a>';
     //Testing if 3D sprite exists on server
-    if (file_exists($spriteFileLocation.$data[1].'.gif') and $HighDataOption == "on")
+    if (file_exists($spriteFileLocation.$setPokemonURLsData[1].'.gif') and $HighDataOption == "on")
     {
-     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$data[1].'.gif">';
+     $pokemonImage = '<img class="whodat" src="'.$spriteFileLocation.$setPokemonURLsData[1].'.gif">';
 
-     if (file_exists($shinySpriteFileLocation.$data[1].'.gif'))
+     if (file_exists($shinySpriteFileLocation.$setPokemonURLsData[1].'.gif'))
      {
-      ShinyCheck($spriteFileLocation.$data[1], $shinySpriteFileLocation.$data[1]);
+      ShinyCheck($spriteFileLocation.$setPokemonURLsData[1], $shinySpriteFileLocation.$setPokemonURLsData[1]);
      }
 
     }
@@ -515,10 +515,10 @@ function SetPokemonURLs($data,$easterEgg)
   }
   else
   {
-   $specificPokemonLinkArr = explode("-",$data[14]);
+   $specificPokemonLinkArr = explode("-",$setPokemonURLsData[14]);
 
    //Setting the link
-   $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($data[13]).'" target="_blank">[PokeDex Entry]</a>';
+   $pokeDexLink = '<a href="https://pokemondb.net/pokedex/'.strtolower($setPokemonURLsData[13]).'" target="_blank">[PokeDex Entry]</a>';
 
    //Capturing a castform filetype change in Pokemondb
    if(strtolower($specificPokemonLinkArr[0]) == "castform")
@@ -536,7 +536,7 @@ function SetPokemonURLs($data,$easterEgg)
     // for some reason castform isn't a JPG in Pokemon DB hence this clause with it's alternative forms so I have to have this clause
     else
     {
-     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($data[14]).'.png">';
+     $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/vector/'.strtolower($setPokemonURLsData[14]).'.png">';
     }
    }
    //Capturing everything else that has a specific link
@@ -559,7 +559,7 @@ function SetPokemonURLs($data,$easterEgg)
      //Everything else that isn't a 3D sprite redirected to pokemonDB
      else
      {
-      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($setPokemonURLsData[14]).'.jpg">';
      }
 
     }
@@ -579,7 +579,7 @@ function SetPokemonURLs($data,$easterEgg)
      //Everything else that isn't a 3D sprite redirected to pokemonDB
      else
      {
-      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($data[14]).'.jpg">';
+      $pokemonImage = '<img class="whodat" src="https://img.pokemondb.net/artwork/'.strtolower($setPokemonURLsData[14]).'.jpg">';
      }
     }
 
@@ -702,15 +702,15 @@ if(is_numeric($pokemonSearch))
   if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
   {
 
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+    while (($PokemonSearchByNoData = fgetcsv($handle, 1000, ",")) !== FALSE)
     {
-      if ($data[0]==$pokemonSearch)
+      if ($PokemonSearchByNoData[0]==$pokemonSearch)
       {
       //Setting variables
-      SetPokemonSpecificTyping($data);
+      SetPokemonSpecificTyping($PokemonSearchByNoData);
 
       //Setting Pokemon Link and Image
-      SetPokemonURLs($data, EasterEggSprite($pokemonSearch));
+      SetPokemonURLs($PokemonSearchByNoData, EasterEggSprite($pokemonSearch));
 
        //Stop it going to the Alolan ones or variants
        break;
@@ -721,11 +721,13 @@ if(is_numeric($pokemonSearch))
 }
 else
 {
+  //Get pokemon that sounds close to what you want Pikachi for example
+  /*---- Start of Pokemon fuzzy search ----*/
   if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
   {
-  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+  while (($pokemonSpecificTypingData = fgetcsv($handle, 1000, ",")) !== FALSE)
   {
-  similar_text(strtolower($data[1]),strtolower($pokemonSearch),$percent);
+  similar_text(strtolower($pokemonSpecificTypingData[1]),strtolower($pokemonSearch),$percent);
 
    if($percent == 100)
     {
@@ -735,56 +737,64 @@ else
    if($percent == 100 or ($percent > 85 and !isset($matchConfirmed)))
     {
      //Setting variables
-     SetPokemonSpecificTyping($data);
+     SetPokemonSpecificTyping($pokemonSpecificTypingData);
 
      //Setting Pokemon Link and Image
-     SetPokemonURLs($data,"");
+     SetPokemonURLs($pokemonSpecificTypingData,"");
     }
   }
   fclose($handle);
   }
+  /*---- End of Pokemon fuzzy search ----*/
 }
 
 
 //get specific information about pokemon
+/*----Start of setting values from CSV----*/
 if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
 {
-while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+while (($settingPokemonData = fgetcsv($handle, 1000, ",")) !== FALSE)
  {
 
+ /*----Start of setting Pokemon name and Region Number----*/
+ //Code for when someone puts in the correct pokemon name in the search
+ // this then triggers the setting of the pokemon region
  if(isset($PokemonValue1))
  {
-   if ($data[2] == $PokemonValue1 and $data[3] == $PokemonValue2 or $data[3] == $PokemonValue1 and $data[2] == $PokemonValue2)
+   if ($settingPokemonData[2] == $PokemonValue1 and $settingPokemonData[3] == $PokemonValue2 or $settingPokemonData[3] == $PokemonValue1 and $settingPokemonData[2] == $PokemonValue2)
    {
-     $PokemonName = $data[1];
-     $Region = $data[11];
+     $PokemonName = $settingPokemonData[1];
+     $Region = $settingPokemonData[11];
      //Combining name and region so I can get the region and name without having to use a multidimensional array.
      $pokemonList[] = $PokemonName.$Region;
    }
  }
 
+ //Same as above, but if 'gender' is put into the seach\
+
  if(strtolower($pokemonSearch) == "gender")
  {
-  if ($data[21] != "")
+  if ($settingPokemonData[21] != "")
   {
     //Capturing the first line and ignoring it
-    if (is_numeric($data[0]))
+    if (is_numeric($settingPokemonData[0]))
     {
-     $PokemonName = $data[1];
-     $Region = $data[11];
+     $PokemonName = $settingPokemonData[1];
+     $Region = $settingPokemonData[11];
     //Combining name and region so I can get the region and name without having to use a multidimensional array.
      $pokemonList[] = $PokemonName.$Region;
     }
   }
  }
+ /*----End of setting Pokemon name and Region Number----*/
 
  //getting all pokemon a number
  if(isset($pokemonNumber))
  {
-  if($pokemonNumber == $data[0])
+  if($pokemonNumber == $settingPokemonData[0])
   {
-   $pokemonNumberNames[] = $data[1];
-   $pokemonNumberLinks[] = $data[14];
+   $pokemonNumberNames[] = $settingPokemonData[1];
+   $pokemonNumberLinks[] = $settingPokemonData[14];
   }
  }
 
@@ -796,21 +806,21 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
 /*----Beginning of setting evolution line values----*/
 if (($handle = fopen("evolutions.csv", "r")) !== FALSE)
 {
-  while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+  while (($EvolutionData = fgetcsv($handle, 1000, ",")) !== FALSE)
   {
     if($specificPokemonName != "")
     {
-     $pos = strpos($data[0], $specificPokemonName);
+     $pos = strpos($EvolutionData[0], $specificPokemonName);
 
-     if($pos !== false and $data[3] != "")
+     if($pos !== false and $EvolutionData[3] != "")
      {
-          $baseEvo = $data[1];
-          $stage1EvoConditions = explode("|",$data[2]);
-          $stage1Pokenames = explode("|",$data[3]);
-          if($data[4] != "")
+          $baseEvo = $EvolutionData[1];
+          $stage1EvoConditions = explode("|",$EvolutionData[2]);
+          $stage1Pokenames = explode("|",$EvolutionData[3]);
+          if($EvolutionData[4] != "")
           {
-               $stage2EvoConditions = explode("|",$data[4]);
-               $stage2Pokenames = explode("|",$data[5]);
+               $stage2EvoConditions = explode("|",$EvolutionData[4]);
+               $stage2Pokenames = explode("|",$EvolutionData[5]);
           }
 
           break;
@@ -822,9 +832,10 @@ if (($handle = fopen("evolutions.csv", "r")) !== FALSE)
 }
 fclose($handle);
 /*----End of setting evolution line values----*/
-
 /*----End of setting values from CSV----*/
 
+
+/*---- Displaying on Page ----*/
 //This is to chech if the correct pokemon was identified, if not set, it will show who is that pokemon, unless specific command overrides
 if (!isset($PokemonValueCombined))
 {
@@ -847,9 +858,10 @@ if (!isset($PokemonValueCombined))
 }
 else
 {
+  //Setting pokemon typing variables
   if (($handle = fopen("PokemonTyping.csv", "r")) !== FALSE)
   {
-   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+   while (($pokemonTypingData = fgetcsv($handle, 1000, ",")) !== FALSE)
    {
 
     if(!isset($pokeDexLink))
@@ -857,7 +869,7 @@ else
     $pokeDexLink = "";
     }
 
-    if ($data[0] == $PokemonValueCombined)
+    if ($pokemonTypingData[0] == $PokemonValueCombined)
     {
      //Displaying the first row
      echo '
@@ -1085,7 +1097,7 @@ else
         </div>';
     }
     echo '
-       <p><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">'.$data[1].' Pokemon of this type</button><br/>
+       <p><button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">'.$pokemonTypingData[1].' Pokemon of this type</button><br/>
     <div id="demo" class="collapse">';
 
        //Prints out all the pokemon in a specific list and splits them by generation
@@ -1096,94 +1108,94 @@ else
        <div class="container">
        <div class="card-group">';
 
-       if ($data[2] != "")
+       if ($pokemonTypingData[2] != "")
        {
-       PrintDataCells("NORMAL",$data[2],ChangeCell($data[2]));
+       PrintDataCells("NORMAL",$pokemonTypingData[2],ChangeCell($pokemonTypingData[2]));
        }
 
-       if ($data[3] != "")
+       if ($pokemonTypingData[3] != "")
        {
-       PrintDataCells("FIRE",$data[3],ChangeCell($data[3]));
+       PrintDataCells("FIRE",$pokemonTypingData[3],ChangeCell($pokemonTypingData[3]));
        }
 
-       if ($data[4] != "")
+       if ($pokemonTypingData[4] != "")
        {
-       PrintDataCells("WATER",$data[4],ChangeCell($data[4]));
+       PrintDataCells("WATER",$pokemonTypingData[4],ChangeCell($pokemonTypingData[4]));
        }
 
-       if ($data[5] != "")
+       if ($pokemonTypingData[5] != "")
        {
-       PrintDataCells("ELECTRIC",$data[5],ChangeCell($data[5]));
+       PrintDataCells("ELECTRIC",$pokemonTypingData[5],ChangeCell($pokemonTypingData[5]));
        }
 
-       if ($data[6] != "")
+       if ($pokemonTypingData[6] != "")
        {
-       PrintDataCells("GRASS",$data[6],ChangeCell($data[6]));
+       PrintDataCells("GRASS",$pokemonTypingData[6],ChangeCell($pokemonTypingData[6]));
        }
 
-       if ($data[7] != "")
+       if ($pokemonTypingData[7] != "")
        {
-       PrintDataCells("ICE",$data[7],ChangeCell($data[7]));
+       PrintDataCells("ICE",$pokemonTypingData[7],ChangeCell($pokemonTypingData[7]));
        }
 
-       if ($data[8] != "")
+       if ($pokemonTypingData[8] != "")
        {
-       PrintDataCells("FIGHTING",$data[8],ChangeCell($data[8]));
+       PrintDataCells("FIGHTING",$pokemonTypingData[8],ChangeCell($pokemonTypingData[8]));
        }
 
-       if ($data[9] != "")
+       if ($pokemonTypingData[9] != "")
        {
-       PrintDataCells("POISON",$data[9],ChangeCell($data[9]));
+       PrintDataCells("POISON",$pokemonTypingData[9],ChangeCell($pokemonTypingData[9]));
        }
 
-       if($data[10] != "")
+       if($pokemonTypingData[10] != "")
        {
-       PrintDataCells("GROUND",$data[10],ChangeCell($data[10]));
+       PrintDataCells("GROUND",$pokemonTypingData[10],ChangeCell($pokemonTypingData[10]));
        }
 
-       if($data[11] != "")
+       if($pokemonTypingData[11] != "")
        {
-       PrintDataCells("FLYING",$data[11],ChangeCell($data[11]));
+       PrintDataCells("FLYING",$pokemonTypingData[11],ChangeCell($pokemonTypingData[11]));
        }
 
-       if($data[12] != "")
+       if($pokemonTypingData[12] != "")
        {
-       PrintDataCells("PSYCHIC",$data[12],ChangeCell($data[12]));
+       PrintDataCells("PSYCHIC",$pokemonTypingData[12],ChangeCell($pokemonTypingData[12]));
        }
 
-       if($data[13] != "")
+       if($pokemonTypingData[13] != "")
        {
-       PrintDataCells("BUG",$data[13],ChangeCell($data[13]));
+       PrintDataCells("BUG",$pokemonTypingData[13],ChangeCell($pokemonTypingData[13]));
        }
 
-       if($data[14] != "")
+       if($pokemonTypingData[14] != "")
        {
-       PrintDataCells("ROCK",$data[14],ChangeCell($data[14]));
+       PrintDataCells("ROCK",$pokemonTypingData[14],ChangeCell($pokemonTypingData[14]));
        }
 
-       if($data[15] != "")
+       if($pokemonTypingData[15] != "")
        {
-       PrintDataCells("GHOST",$data[15],ChangeCell($data[15]));
+       PrintDataCells("GHOST",$pokemonTypingData[15],ChangeCell($pokemonTypingData[15]));
        }
 
-       if($data[16] != "")
+       if($pokemonTypingData[16] != "")
        {
-       PrintDataCells("DRAGON",$data[16],ChangeCell($data[16]));
+       PrintDataCells("DRAGON",$pokemonTypingData[16],ChangeCell($pokemonTypingData[16]));
        }
 
-       if($data[17] != "")
+       if($pokemonTypingData[17] != "")
        {
-       PrintDataCells("DARK",$data[17],ChangeCell($data[17]));
+       PrintDataCells("DARK",$pokemonTypingData[17],ChangeCell($pokemonTypingData[17]));
        }
 
-       if($data[18] != "")
+       if($pokemonTypingData[18] != "")
        {
-       PrintDataCells("STEEL",$data[18],ChangeCell($data[18]));
+       PrintDataCells("STEEL",$pokemonTypingData[18],ChangeCell($pokemonTypingData[18]));
        }
 
-       if($data[19] != "")
+       if($pokemonTypingData[19] != "")
        {
-       PrintDataCells("FAIRY",$data[19],ChangeCell($data[19]));
+       PrintDataCells("FAIRY",$pokemonTypingData[19],ChangeCell($pokemonTypingData[19]));
        }
       }
    }
