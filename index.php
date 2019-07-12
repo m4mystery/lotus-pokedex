@@ -703,25 +703,44 @@ else
   /*---- Start of Pokemon fuzzy search ----*/
   if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
   {
-  while (($pokemonSpecificTypingData = fgetcsv($handle, 1000, ",")) !== FALSE)
-  {
-  similar_text(strtolower($pokemonSpecificTypingData[1]),strtolower($pokemonSearch),$percent);
-
-   if($percent == 100)
+    //Loading CSV
+    while (($pokemonSpecificTypingData = fgetcsv($handle, 1000, ",")) !== FALSE)
     {
-     //To make sure it does not apply / satisft the 85 and above condition
-     $matchConfirmed = true;
-    }
-   if($percent == 100 or ($percent > 85 and !isset($matchConfirmed)))
-    {
-     //Setting variables
-     SetPokemonSpecificTyping($pokemonSpecificTypingData);
+      //Taking the pokemon name and converting it to an exploded array so I can pick out the specific words
+      $pokemonNameExploded = explode(' ',$pokemonSpecificTypingData[1]);
+      //exploding the user input for checking if the user put in two words i.e Charizard Mega
+      $pokemonSearchExploded = explode(' ',$pokemonSearch);
 
-     //Setting Pokemon Link and Image
-     SetPokemonURLs($pokemonSpecificTypingData,"");
+      //Seeing if the pokemon in the database has more than word (lycanroc midday)
+      //but the user has only put in one name lycanroc
+      //for the system to ignore for any additional text and match on the first word only
+      if ($pokemonNameExploded[1] != "" && $pokemonSearchExploded[1] == "")
+      {
+        //Checking for similar text against a single value
+        similar_text(strtolower($pokemonNameExploded[0]),strtolower($pokemonSearchExploded[0]),$percent);
+      }
+      //regular search against database and user input
+      else
+      {
+        //Checking for similar text against a single value
+        similar_text(strtolower($pokemonSpecificTypingData[1]),strtolower($pokemonSearch),$percent);
+      }
+
+
+      if($percent == 100)
+      {
+        //To make sure it does not apply / satisft the 85 and above condition
+        $matchConfirmed = true;
+      }
+      if($percent == 100 or ($percent > 85 and !isset($matchConfirmed)))
+      {
+        //Setting variables
+        SetPokemonSpecificTyping($pokemonSpecificTypingData);
+        //Setting Pokemon Link and Image
+        SetPokemonURLs($pokemonSpecificTypingData,"");
+      }
     }
-  }
-  fclose($handle);
+    fclose($handle);
   }
   /*---- End of Pokemon fuzzy search ----*/
 }
