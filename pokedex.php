@@ -31,12 +31,12 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
     if($data[14]== "")
     {
       echo '
-      <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></a></td>';
+      <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></a></td>';
     }
     else
     {
       echo '
-      <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="https://img.pokemondb.net/sprites/sun-moon/icon/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';"></a></td>';
+      <td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';"></a></td>';
     }
     //Sprintf is used to make single digit number into, in this case triple digits
     echo '
