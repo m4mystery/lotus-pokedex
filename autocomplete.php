@@ -111,6 +111,8 @@ var pokemonArr = [<?php
 
 /*initiate the autocomplete function on the "myInput" element, and pass along the pokemon array though a PHP array as possible autocomplete values:*/
 autocomplete(document.getElementById("myInput"), pokemonArr);
+autocomplete(document.getElementById("myInputForm1"), pokemonArr);
+autocomplete(document.getElementById("myInputForm2"), pokemonArr);
 
 /* https://www.w3schools.com/howto/howto_js_autocomplete.asp */
 </script>

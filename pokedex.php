@@ -153,6 +153,9 @@ function sortTable(n) {
 
 <?php
 
+//____Autocomplete Javascript Call_____\\
+include("autocomplete.php");
+
 include_once('view-bottom.php');
 
 ?>

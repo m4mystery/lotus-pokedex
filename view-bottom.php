@@ -20,7 +20,8 @@
 <!--Rotom button that closes and opens a div for the pokedex -->
 <p class="footerIcon">
   <img class="footerIcon" data-toggle="collapse" href="#rotomDex" role="button" aria-expanded="false" aria-controls="collapseExample" src="Photos/rotom-dex.png" width="50px">
-  <a href="index.php?Type1=Bug&Type2=&search=gender&HighDataOpt=on""><img class="footerIcon" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapseExample" src="Photos/R_T.png" width="80px"></a>
+  <a href="index.php?Type1=Bug&Type2=&search=gender&HighDataOpt=on"><img class="footerIcon" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="collapseExample" src="Photos/R_T.png" width="80px"></a>
+    <a href="/compare.php?mc=Pikachu&rival=Meowth"><img class="footerIcon" src="Photos/battle-girl-badge.png" width="50px"></a>
 </p>
 
 
