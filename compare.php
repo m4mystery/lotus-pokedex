@@ -5,9 +5,9 @@ include_once('view-top.php');
 
 ?>
 <form method="GET" >
-  <input autocomplete="off" name="mc" id="myInputForm1" class="form-control" value="Pikachu" />
+  <input autocomplete="off" name="mc" id="myInputForm1" class="form-control" placeholder="Pikachu" />
   <hr/>
-  <input autocomplete="off" name="rival" id="myInputForm2" class="form-control" value="Meowth" />
+  <input autocomplete="off" name="rival" id="myInputForm2" class="form-control" placeholder="Meowth" />
   <hr/>
   <input type="submit" class="btn btn-block btn-success"/>
 </form>
@@ -22,11 +22,16 @@ include_once('view-top.php');
     </tr>
 <?php
 
-global $pokemonIcon1, $pokemonIcon2, $pokemonType1Total, $pokemonType2Total;
+global $pokemonIcon1, $pokemonIcon2, $pokemonType1Total, $pokemonType2Total, $pokemon1Gen, $pokemon2Gen;
 global $pokemon1Total, $pokemon1HP, $pokemon1Attack , $pokemon1Defence, $pokemon1SpAtt, $pokemon1SpDef , $pokemon1Speed;
 global $pokemon2Total, $pokemon2HP, $pokemon2Attack , $pokemon2Defence, $pokemon2SpAtt, $pokemon2SpDef , $pokemon2Speed;
 
-
+if ($_GET['mc'] == "" && $_GET['rival']=="")
+{
+	echo '<p> Search for two Pokemon to compare above</p>';
+}
+else
+{
 if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
 {
   //Getting Gen from GET Paramater
@@ -49,22 +54,22 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
       {
         if(strtolower($data[1]) == strtolower($pokemonCompare1))
         {
-          $pokemonIcon1 = '<td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a></td>';
+          $pokemonIcon1 = '<a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a>';
         }
         if(strtolower($data[1]) == strtolower($pokemonCompare2))
         {
-          $pokemonIcon2 = '<td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a></td>';
+          $pokemonIcon2 = '<a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[1]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[1]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a>';
         }
       }
       else
       {
         if($data[1] == $pokemonCompare1)
         {
-          $pokemonIcon1 = '<td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[14]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a></td>';
+          $pokemonIcon1 = '<a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[14]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a>';
         }
         if($data[1] == $pokemonCompare2)
         {
-          $pokemonIcon2 = '<td><a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[14]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a></td>';
+          $pokemonIcon2 = '<a href="index.php?Type1=Bug&Type2=&search='.urlencode($data[14]).'&HighDataOpt=on"><img class="tinySprite" src="Sprites/sugimori/'.strtolower($data[14]).'.png" onError="this.onerror=null;this.src=\'Photos/Missingno_Sprite.png\';" ></br>'.$data[1].'</a>';
         }
       }
       #,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,Sp. Def,Speed,
@@ -79,6 +84,7 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
         $pokemon1SpAtt = $data[8];
         $pokemon1SpDef = $data[9];
         $pokemon1Speed = $data[9];
+        $pokemon1Gen = $data[11];
       }
 
       if($data[1] == $pokemonCompare2)
@@ -92,6 +98,7 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
         $pokemon2SpAtt = $data[8];
         $pokemon2SpDef = $data[9];
         $pokemon2Speed = $data[9];
+        $pokemon2Gen = $data[11];
       }
 
   }
@@ -203,10 +210,28 @@ if (($handle = fopen("PokemonTyping.csv", "r")) !== FALSE)
 
 
 echo '
-<tr>
-<td>Pokemon</td>
-'.$pokemonIcon1.$pokemonIcon2.'
-<tr>
+  <!--Pokemon Icon-->
+  <tr>
+    <td>Pokemon</td>
+    <td>'.$pokemonIcon1.'
+    </td>
+    <td>'.$pokemonIcon2.'
+    </td>
+  <tr>
+  <!--Pokemon Icon-->';
+ 
+  echo '	
+  <!--Gen-->
+  <tr>
+    <td>Generation</td>
+    <td>'.$pokemon1Gen.'
+    </td>
+    <td>'.$pokemon2Gen.'
+    </td>
+  </tr>
+  <!--Gen-->';
+  
+  echo '
   <!--Type-->
   <td>Type</td>
   <td>
@@ -327,7 +352,7 @@ echo '
     </td>
   </tr>
   <!--Speed-->';
-
+}
 ?>
 </table>
 
