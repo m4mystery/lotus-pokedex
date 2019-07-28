@@ -1050,6 +1050,7 @@ else
     if(isset($HP) and $HP !="")
     {
     //POGO Calculations
+    //Update courtesy of https://pokemongo.gamepress.gg/explaining-october-2018-stat-change and my own fucking google sheet, just didn't realise I was using the wrong formula.
     //CpM (Combat Points Modifier) - Using Level 40 (Technically Level 39)
     //$CPM = 0.78463697;
     //Correct Level 40 CPM
