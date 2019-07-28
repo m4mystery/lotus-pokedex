@@ -1051,7 +1051,9 @@ else
     {
     //POGO Calculations
     //CpM (Combat Points Modifier) - Using Level 40 (Technically Level 39)
-    $CPM = 0.78463697;
+    //$CPM = 0.78463697;
+    //Correct Level 40 CPM
+    $CPM = 0.79030001;
 
     //Level of the IVs as you would get through Appraisals
     $IV_Attack = 15;
@@ -1064,17 +1066,24 @@ else
     //Generating Base Attack by combining Special Att. And Base Att.
     $HigherAttackStat = MAX($Attack,$SpAtk);
     $LowerAttackStat = MIN($Attack,$SpAtk);
+    //This was the 2018 verstion of generating defence
     $ScaledAttackStat = ROUND(2*((7/8)*$HigherAttackStat+(1/8)*$LowerAttackStat));
     $PokemonGoBaseAttack = Round($ScaledAttackStat * $PokemonGoSpeedMod);
 
     //Generating Base Defense combining Special Def. And Base Def.
     $HigherDefenseStat = MAX($Defense,$SpDef);
     $LowerDefenseStat = MIN($Defense,$SpDef);
-    $ScaledDefenseStat = ROUND(2*((7/8)*$HigherDefenseStat+(1/8)*$LowerDefenseStat));
+    //This was the 2018 verstion of generating defence
+    //$ScaledDefenseStat = ROUND(2*((7/8)*$HigherDefenseStat+(1/8)*$LowerDefenseStat));
+    //2019 TDO and PvP changes
+    $ScaledDefenseStat = ROUND(2*((5/8)*$HigherDefenseStat+(3/8)*$LowerDefenseStat));
     $PokemonGoBaseDefense = Round($ScaledDefenseStat * $PokemonGoSpeedMod);
 
     //Generating Base Stamina (HP)
-    $PokemonGoBaseHP = 2*$HP;
+    //This was the old way.
+    //$PokemonGoBaseHP = 2*$HP;
+    //New Updated Way for generating Base Stamina
+    $PokemonGoBaseHP = floor($HP*1.75+50);
 
     //Rounding down the Pokemon MAX CP based on the stats above pow() - is power of, floor() rounds down to the nearest integer
     $CP = floor((($PokemonGoBaseAttack+$IV_Attack)*pow(($PokemonGoBaseDefense+$IV_Defense),0.5)*pow(($PokemonGoBaseHP+$IV_HP),0.5)*pow($CPM,2))/10);

@@ -83,7 +83,7 @@ if (($handle = fopen("PokemonSpecificTyping.csv", "r")) !== FALSE)
         $pokemon1Defence = $data[7];
         $pokemon1SpAtt = $data[8];
         $pokemon1SpDef = $data[9];
-        $pokemon1Speed = $data[9];
+        $pokemon1Speed = $data[10];
         $pokemon1Gen = $data[11];
       }
 
@@ -219,8 +219,8 @@ echo '
     </td>
   <tr>
   <!--Pokemon Icon-->';
- 
-  echo '	
+
+  echo '
   <!--Gen-->
   <tr>
     <td>Generation</td>
@@ -230,7 +230,7 @@ echo '
     </td>
   </tr>
   <!--Gen-->';
-  
+
   echo '
   <!--Type-->
   <td>Type</td>
