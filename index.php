@@ -884,13 +884,18 @@ else
       {
        $valueWithoutSpaces = preg_replace('/\s+/', '-', strtolower($value));
        $megaWithoutSpaces = explode("-",$megaPieces[$counter]);
+       $megaStoneImage = '<img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px">';
+       if ($value == "None")
+       {
+         $megaStoneImage = "<p>(No megastone required)</p>";
+       }
        if (count($megaWithoutSpaces) < 3)
        {
-        echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].$highDataOptGET.'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+        echo '<a href="?Type1=Bug&Type2=&search=Mega+'.$megaWithoutSpaces[0].$highDataOptGET.'">'.$megaStoneImage.'</a>';
        }
        else
        {
-        echo '<a href="?Type1=Bug&Type2=&search=Mega-'.$megaWithoutSpaces[0].'-'.$megaWithoutSpaces[2].$highDataOptGET.'"><img src="/Icons/megastones/'.$valueWithoutSpaces.'.png" width="30px"></a>';
+        echo '<a href="?Type1=Bug&Type2=&search=Mega+'.$megaWithoutSpaces[0].'+'.$megaWithoutSpaces[2].$highDataOptGET.'">'.$megaStoneImage.'</a>';
        }
        $counter++;
       }
