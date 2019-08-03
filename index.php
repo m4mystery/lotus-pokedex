@@ -1013,28 +1013,28 @@ else
             $megaArrXYVariants = explode("|",$mega);
             if(count($megaArrXYVariants)<2)
             {
-             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($megaArr[0]).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($megaArr[0]).'-mega.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+             echo '<a href="?Type1=Normal&Type2=&search='.str_replace(' ', '+', $pokenames).'&'.$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($megaArr[0]).'-mega.png" height="42"><br/>'.$pokenames.'</p></li></a>';
             }
             else
             {
              $pokenamesArr = explode(" ",$pokenames);
-             echo '<a href="?Type1=Normal&Type2=&search=mega-'.strtolower($pokenamesArr[1]).'-'.strtolower($pokenamesArr[2]).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+             echo '<a href="?Type1=Normal&Type2=&search='.str_replace(' ', '+', $pokenames).'&'.$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenamesArr[1]).'-mega-'.strtolower($pokenamesArr[2]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
             }
            }
            else
            {
-            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenames).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenames).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+            echo '<a href="?Type1=Normal&Type2=&search='.str_replace(' ', '+', $pokenames).'&'.$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenames).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
            }
           }
           else
           {
            if($pokemonNumberLinks[$counter] != "")
            {
-             echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+             echo '<a href="?Type1=Normal&Type2=&search='.str_replace(' ', '+', $pokenames).'&'.$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokemonNumberLinks[$counter]).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
            }
            else
            {
-            echo '<a href="?Type1=Normal&Type2=&search='.strtolower($pokenamesWithoutSpaces).$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenames).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
+            echo '<a href="?Type1=Normal&Type2=&search='.str_replace(' ', '+', $pokenames).'&'.$highDataOptGET.'"><li><p><img src="Sprites/sugimori/'.strtolower($pokenames).'.png" height="42"><br/>'.$pokenames.'</p></li></a>';
            }
           }
           $counter++;
